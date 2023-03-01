@@ -1,2 +1,2 @@
 # journal-app
-React journaling app
+React journaling app here
