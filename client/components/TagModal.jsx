@@ -12,35 +12,49 @@ export default function TagModal({
     return "";
   }
 
-  const [newTag, setNewTag] = useState({});
-  const [tagUpdated, setTagUpdated] = useState({});
+  // const [tagsUpdated, setTagsUpdated] = useState([...tags]);
+  const tagsUpdated = useRef([...tags]);
+  const newTagNameRef = useRef();
+
+  const handleTagChange = function (id, newName) {
+    const updatedTagsUpdated = tagsUpdated.current.map(tag => {
+      if (tag.id === id) {
+        return {id: id, name: newName}
+      } else {
+        return tag;
+      }
+    })
+    tagsUpdated.current = updatedTagsUpdated;
+  }
+
+  const submitTagChange = function (tagId) {
+    const tagUpdated = tagsUpdated.current.find(tag => tag.id === tagId)
+    console.log(tagUpdated);
+    onUpdateTag(tagUpdated);
+  }
 
   return (
     <div className="overlay">
       <form className="modal">
         <h1>Edit tags</h1>
         <div className="modal-tag">
-          <button className="icon-btn">
-            <button className="icon-btn">
-              <span className="material-symbols-outlined">close</span>
-            </button>
+          <button className="icon-btn" type="button" onClick={() => newTagNameRef.current.value = ""}>
+            <span className="material-symbols-outlined">close</span>
           </button>
           <input
             type="text"
             id="newTagNameField"
             placeholder="Create tag"
             autoFocus
-            onChange={(e) => {
-              setNewTag({
-                ...newTag,
-                name: e.target.value,
-              });
-            }}
+            ref={newTagNameRef}
           />
           <button
             type="button"
             className="icon-btn"
-            onClick={() => onAddTag(newTag)}
+            onClick={() => {
+              onAddTag({name: newTagNameRef.current.value})
+              newTagNameRef.current.value = "";
+            }}
           >
             <span className="material-symbols-outlined">done</span>
           </button>
@@ -49,17 +63,16 @@ export default function TagModal({
           <div className="modal-tag" key={tag.id}>
             <button className="icon-btn">
               <span
-                style={{ color: tag.color }}
                 className="material-symbols-outlined"
               >
                 label
               </span>
             </button>
-            <input type="text" value={tag.name} />
+            <input type="text" defaultValue={tag.name} onChange={(e) => handleTagChange(tag.id, e.target.value)} />
             <button className="icon-btn" onClick={() => onDeleteTag(tag.id)}>
               <span className="material-symbols-outlined">delete</span>
             </button>
-            <button className="icon-btn" type="button" onClick={() => onUpdateTag(tagUpdated)}>
+            <button className="icon-btn" type="button" onClick={() => submitTagChange(tag.id)}>
               <span className="material-symbols-outlined">done</span>
             </button>
           </div>
