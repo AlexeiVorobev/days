@@ -9,20 +9,19 @@ const NoteList = ({ notes, tags, activeTag }) => {
   }
 
   const getNotesByTag = function (notes, tag) {
-    const notesFiltered = [...notes];
-    notesFiltered.filter(note => !note.tagList.includes('1'));
-    console.log(notesFiltered)
+    const notesFiltered = notes.filter(note => note.tagList.includes(tag));
     return notesFiltered;
   }
 
   const notesToDisplay = activeTag ? getNotesByTag(notes, activeTag) : notes;
-  
-  let currentDate = new Date(notesToDisplay[0].date);
-  if (!notesToDisplay) return (
-    <div>
+  if (!notesToDisplay || notesToDisplay.length === 0) return (
+    <div className="main-empty">
       It's empty lol.
     </div>
   )
+
+  let currentDate = new Date(notesToDisplay[0].date);
+  
   return (
     <div>
       <h1 className="month-header">{format(currentDate, 'MMMM')} {format(currentDate, 'y')}</h1>

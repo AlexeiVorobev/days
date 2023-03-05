@@ -37,6 +37,7 @@
 
 .main-container {
   margin: 0 auto;
+  height: 100%;
   width: 816px;
 }
 
@@ -46,7 +47,7 @@
 }
 
 .month-header {
-  font-size: 28px;
+  font-size: 26px;
   margin-bottom: 10px;
   margin-top: 20px;
   font-weight: normal;
@@ -130,7 +131,22 @@ body {
   background-color: white;
 }
 
+.main-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  position: relative;
+  bottom: 30px;
+
+  color: #ccc;
+  font-size: 36px;
+  font-weight: normal;
+
+}
+
 .header {
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   background-color: white;
   padding: 0 var(--margin-m);
   color: var(--font-color-primary);
