@@ -1,9 +1,13 @@
 import React from "react";
 
-const Sidebar = ({ tags, setTagModalActive }) => {
+const Sidebar = ({ tags, setTagModalActive, activeTag, setActiveTag }) => {
+
+  const handleMenuTagClick = function (id) {
+    setActiveTag(id)
+  }
 
   const menuTags = tags.map((tag) => (
-    <div className="menu-tag menu-item" key={tag.id}>
+    <div className={"menu-tag menu-item " + (activeTag === tag.id ? 'active' : '')} key={tag.id} onClick={() => handleMenuTagClick(tag.id)}>
       <span className="material-symbols-outlined">
         label
       </span>
@@ -21,7 +25,7 @@ const Sidebar = ({ tags, setTagModalActive }) => {
         <span className="material-symbols-outlined">add_notes</span>
         New note
       </div>
-      <div className="menu-item" id="menuHome">
+      <div className={"menu-item " + (activeTag ? '' : "active")} id="menuHome" onClick={() => setActiveTag(null)}>
         <span className="material-symbols-outlined">home</span>
         Home
       </div>

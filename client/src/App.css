@@ -11,7 +11,88 @@
   --primary-color: #2e2e35;
   --margin-m: 24px;
   --font-color-primary: #222222;
+  --font-color-light: #777;
   --menu-hover-color: #4d5055;
+  --menu-active-color: #444549;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 6px;
+  }
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: rgba(0,0,0,0.1);
+  }
+::-webkit-scrollbar-thumb{
+    border-radius: 10px;
+    background: rgba(0,0,0,0.2);
+  }
+::-webkit-scrollbar-thumb:hover{
+  	background: rgba(0,0,0,0.4);
+  }
+::-webkit-scrollbar-thumb:active{
+  	background: rgba(0,0,0,.9);
+  }
+
+.main-container {
+  margin: 0 auto;
+  width: 816px;
+}
+
+.main-section {
+  margin: 0 4px;
+  overflow-y: auto;
+}
+
+.month-header {
+  font-size: 28px;
+  margin-bottom: 10px;
+  margin-top: 20px;
+  font-weight: normal;
+  
+}
+
+.card-date {
+  font-size: 14px;
+  color: var(--font-color-light);
+  height: 100%;
+}
+
+.card-bottom-panel {
+  margin-top: 16px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 8px;
+}
+
+.tag-box {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  padding: 2px 4px;
+}
+
+.note-card {
+  cursor: pointer;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+  text-align: start;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  min-height: 100px;
+  padding: 10px 20px;
+  border-radius: 8px;
+}
+
+.note-card h1 {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.note-card p {
+  font-size: 16px;
+  color: var(--font-color-light);
 }
 
 body {
@@ -31,6 +112,7 @@ body {
 }
 
 .sidebar {
+
   background-color: #2e2e35;
   color: white;
   height: 100%;
@@ -96,6 +178,10 @@ body {
   gap: 4px;
   align-items: center;
   padding: 12px var(--margin-m);
+}
+
+.menu-item.active {
+  background-color: var(--menu-active-color);
 }
 
 .menu-item:hover {
