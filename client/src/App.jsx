@@ -56,12 +56,12 @@ function App() {
 
   const getTitle = function () {
     if (activeTag) return getTag(activeTag).name;
-    return "All notes"
-  }
+    return "All notes";
+  };
 
-  const getTag = function(id) {
-    return tags.find(tag => tag.id === id)
-  }
+  const getTag = function (id) {
+    return tags.find((tag) => tag.id === id);
+  };
 
   const [tags, setTags] = useState(
     localStorage.tags
@@ -90,11 +90,11 @@ function App() {
 
   const handleDeleteTag = function (idToDelete) {
     setTags(tags.filter((tag) => tag.id !== idToDelete));
-    const notesUpdated = notes.map(note => {
-      note.tagList = note.tagList.filter(id !== idToDelete)
+    const notesUpdated = notes.map((note) => {
+      note.tagList = note.tagList.filter(id => id !== idToDelete);
       return note;
-    }     
-    )
+    });
+    setNotes(notesUpdated)
   };
 
   const handleUpdateTag = function (tagUpdated) {

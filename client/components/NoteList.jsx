@@ -23,7 +23,7 @@ const NoteList = ({ notes, tags, activeTag }) => {
   let currentDate = new Date(notesToDisplay[0].date);
   
   return (
-    <div>
+    <div className="note-container">
       <h1 className="month-header">{format(currentDate, 'MMMM')} {format(currentDate, 'y')}</h1>
       {notesToDisplay.map((note) => {
         const date = new Date(note.date);
