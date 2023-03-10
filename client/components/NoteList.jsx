@@ -2,7 +2,7 @@ import React from "react";
 import { useRef } from "react";
 import format from "date-fns/format";
 
-const NoteList = ({ notes, tags, activeTag }) => {
+const NoteList = ({ notes, tags, activeTag, onNoteOpen }) => {
 
   const getTag = function(id) {
     return tags.find(tag => tag.id === id)
@@ -19,6 +19,10 @@ const NoteList = ({ notes, tags, activeTag }) => {
       It's empty lol.
     </div>
   )
+
+  const handleNoteClick = function (noteId) {
+    onNoteOpen(noteId)
+  }
 
   let currentDate = new Date(notesToDisplay[0].date);
   
@@ -40,7 +44,7 @@ const NoteList = ({ notes, tags, activeTag }) => {
           <h1 className="month-header">{month} {year}</h1>
           : ""
           }
-        <div className="note-card">
+        <div className="note-card" onClick={() => handleNoteClick(note.id)}>
           <h1>{note.title}</h1>
           <p>{note.body}</p>
           <div className="card-bottom-panel">

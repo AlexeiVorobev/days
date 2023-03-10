@@ -1,9 +1,16 @@
 import React from "react";
+import logoUrl from '../src/assets/days-logo-white.svg'
 
-const Sidebar = ({ tags, setTagModalActive, activeTag, setActiveTag }) => {
+const Sidebar = ({ tags, setTagModalActive, activeTag, setActiveTag, setActiveNote }) => {
 
   const handleMenuTagClick = function (id) {
-    setActiveTag(id)
+    setActiveTag(id);
+    setActiveNote(null);
+  }
+
+  const handleMenuHomeClick = function () {
+    setActiveTag(null);
+    setActiveNote(null);
   }
 
   const menuTags = tags.map((tag) => (
@@ -18,14 +25,13 @@ const Sidebar = ({ tags, setTagModalActive, activeTag, setActiveTag }) => {
   return (
     <div className="sidebar">
       <div className="logo">
-        <span className="material-symbols-outlined logo-picture">library_books</span>
-        <div className="logo-title">Days</div>
+        <img src={logoUrl} alt="" />
       </div>
       <div className="menu-item" id="menuNewNote">
         <span className="material-symbols-outlined">add_notes</span>
         New note
       </div>
-      <div className={"menu-item " + (activeTag ? '' : "active")} id="menuHome" onClick={() => setActiveTag(null)}>
+      <div className={"menu-item " + (activeTag ? '' : "active")} id="menuHome" onClick={handleMenuHomeClick}>
         <span className="material-symbols-outlined">home</span>
         Home
       </div>

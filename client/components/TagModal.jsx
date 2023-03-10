@@ -17,7 +17,7 @@ export default function TagModal({
   const newTagNameRef = useRef();
 
   const handleTagChange = function (id, newName) {
-    const updatedTagsUpdated = tagsUpdated.current.map(tag => {
+    const updatedTagsUpdated = tagsUpdated.current.map(tag => { 
       if (tag.id === id) {
         return {id: id, name: newName}
       } else {
@@ -79,7 +79,7 @@ export default function TagModal({
         ))}
         <div className="btn-panel">
           <button className="btn-regular" type="button" onClick={onClose}>
-            Done
+            Close
           </button>
         </div>
       </form>

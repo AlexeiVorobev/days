@@ -2,7 +2,7 @@ import React from 'react';
 import NoteList from './NoteList';
 import NotePage from './NotePage';
 
-const MainSection = ({activeNote, activeTag, notes, tags}) => {
+const MainSection = ({activeNote, activeTag, notes, tags, onNoteOpen}) => {
   if (activeNote) {
     return (
     <div className="main-container">
@@ -12,7 +12,7 @@ const MainSection = ({activeNote, activeTag, notes, tags}) => {
   } else {
     return (
     <div className="main-container">
-      <NoteList activeTag={activeTag} notes={notes} tags={tags} />
+      <NoteList activeTag={activeTag} notes={notes} tags={tags} onNoteOpen={onNoteOpen} />
     </div>
     )
   }
