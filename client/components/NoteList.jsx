@@ -2,11 +2,16 @@ import React from "react";
 import { useRef } from "react";
 import format from "date-fns/format";
 
-const NoteList = ({ notes, tags, activeTag, onNoteOpen }) => {
+const NoteList = ({ notes, tags, activeTag, onNoteOpen, appState, setAppState, getTag }) => {
 
-  const getTag = function(id) {
-    return tags.find(tag => tag.id === id)
-  }
+  function removeTags(str) {
+    if ((str===null) || (str===''))
+        return false;
+    else
+        str = str.toString();
+
+    return str.replace( /(<([^>]+)>)/ig, '');
+}
 
   const getNotesByTag = function (notes, tag) {
     const notesFiltered = notes.filter(note => note.tagList.includes(tag));
@@ -22,6 +27,7 @@ const NoteList = ({ notes, tags, activeTag, onNoteOpen }) => {
 
   const handleNoteClick = function (noteId) {
     onNoteOpen(noteId)
+    setAppState('note')
   }
 
   let currentDate = new Date(notesToDisplay[0].date);
@@ -46,7 +52,8 @@ const NoteList = ({ notes, tags, activeTag, onNoteOpen }) => {
           }
         <div className="note-card" onClick={() => handleNoteClick(note.id)}>
           <h1>{note.title}</h1>
-          <p>{note.body}</p>
+          <p>{removeTags(note.body)}</p>
+          
           <div className="card-bottom-panel">
             <div className="card-date">{format(date, 'dd MMMM y')}</div>
             {

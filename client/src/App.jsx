@@ -8,68 +8,34 @@ import TagModal from "../components/TagModal";
 import * as utils from "./utils";
 import { formatISO } from "date-fns";
 
+const DEFAULT_NOTES = [
+  {
+    id: uuid(),
+    title: "About foxes and dogs",
+    body: "Quick brown fox jumps over the lazy dog.",
+    date: formatISO(new Date(), { representation: "date" }),
+    tagList: ["0", "1"],
+  },
+  {
+    id: uuid(),
+    title: "About foxes and dogs",
+    body: "Quick brown fox jumps over the lazy dog.",
+    date: "2023-01-30",
+    tagList: ["0", "1"],
+  },
+  {
+    id: uuid(),
+    title: "Big dump",
+    body: "Dear diary. Today I went to the bathroom and took a major shit. Damn, that was intense! Even my neighbours came down to...",
+    date: "2022-12-31",
+    tagList: ["0"],
+  },
+];
+
 function App() {
-  const [notes, setNotes] = useState([
-    {
-      id: uuid(),
-      title: "About foxes and dogs",
-      body: "Quick brown fox jumps over the lazy dog.",
-      date: formatISO(new Date(), { representation: "date" }),
-      tagList: ["0", "1"],
-    },
-    {
-      id: uuid(),
-      title: "About foxes and dogs",
-      body: "Quick brown fox jumps over the lazy dog.",
-      date: formatISO(new Date(), { representation: "date" }),
-      tagList: ["0"],
-    },
-    {
-      id: uuid(),
-      title: "About foxes and dogs",
-      body: "Quick brown fox jumps over the lazy dog.",
-      date: "2023-01-30",
-      tagList: ["0", "1"],
-    },
-    {
-      id: uuid(),
-      title: "About foxes and dogs",
-      body: "Quick brown fox jumps over the lazy dog.",
-      date: "2023-01-21",
-      tagList: ["1"],
-    },
-    {
-      id: uuid(),
-      title: "Big dump",
-      body: "Dear diary. Today I went to the bathroom and took a major shit. Damn, that was intense! Even my neighbours came down to...",
-      date: "2022-12-31",
-      tagList: ["0"],
-    },
-    {
-      id: uuid(),
-      title: "Big dump",
-      body: "Dear diary. Today I went to the bathroom and took a major shit. Damn, that was intense! Even my neighbours came down to...",
-      date: "2022-12-16",
-      tagList: ["1"],
-    },
-  ]);
-
-  const handleNoteOpen = function (noteId) {
-    setActiveNote(noteId);
-  }
-
-  const getNote = function(id) {
-    return notes.find(note => note.id === id)
-  }
-
-  const getTitle = function () {
-    if (activeTag) return getTag(activeTag).name;
-    return "All notes";
-  };
-
-  const getTag = function (id) {
-    return tags.find((tag) => tag.id === id);
-  };
+  const [notes, setNotes] = useState(
+    localStorage.notes ? JSON.parse(localStorage.notes) : DEFAULT_NOTES
+  );
 
   const [tags, setTags] = useState(
     localStorage.tags
@@ -80,8 +46,52 @@ function App() {
         ]
   );
 
+  const [appState, setAppState] = useState(null);
   const [activeNote, setActiveNote] = useState(null);
   const [activeTag, setActiveTag] = useState(null);
+
+  const handleNoteOpen = function (noteId) {
+    setActiveNote(noteId);
+  };
+
+  const handleCreateNote = function () {
+    const newNote = {
+      id: uuid(),
+      title: "",
+      body: "New note there",
+      date: formatISO(new Date(), { representation: "date" }),
+      tagList: [],
+    };
+    setNotes([newNote, ...notes]);
+    setActiveNote(newNote.id);
+    setAppState("note");
+  };
+
+  const handleTitleChange = function(newTitle) {
+
+    const notesUpdated = notes.map(note => {
+      if (note.id === activeNote) {
+        note.title = newTitle;
+        return note;
+      } else {
+        return note;
+      }
+    })
+    setNotes(notesUpdated);
+  }
+
+  const getNote = function (id) {
+    return notes.find((note) => note.id === id);
+  };
+
+  const getTitle = function () {
+    if (activeTag) return getTag(activeTag).name;
+    return "All notes";
+  };
+
+  const getTag = function (id) {
+    return tags.find((tag) => tag.id === id);
+  };
 
   useEffect(() => {
     localStorage.setItem("tags", JSON.stringify(tags));
@@ -102,10 +112,18 @@ function App() {
     }
     setTags(tags.filter((tag) => tag.id !== idToDelete));
     const notesUpdated = notes.map((note) => {
-      note.tagList = note.tagList.filter(id => id !== idToDelete);
+      note.tagList = note.tagList.filter((id) => id !== idToDelete);
       return note;
     });
-    setNotes(notesUpdated)
+    setNotes(notesUpdated);
+  };
+
+  const saveNote = function (id, content) {
+    const noteIndex = notes.findIndex((note) => note.id === id);
+    const notesUpdated = notes;
+    notesUpdated[noteIndex].body = content;
+    setNotes(notesUpdated);
+    localStorage.setItem("notes", JSON.stringify(notes));
   };
 
   const handleUpdateTag = function (tagUpdated) {
@@ -122,21 +140,33 @@ function App() {
 
   return (
     <div className="App">
-      <Header title={getTitle()} />
+      <Header
+        title={getTitle()}
+        note={getNote(activeNote)}
+        appState={appState}
+        onTitleChange={handleTitleChange}
+      />
       <Sidebar
         tags={tags}
         setTagModalActive={setTagModalActive}
         activeTag={activeTag}
         setActiveTag={setActiveTag}
         setActiveNote={setActiveNote}
+        appState={appState}
+        setAppState={setAppState}
+        onCreateNote={handleCreateNote}
       />
       <div className="main-section">
         <MainSection
-          activeNote={getNote(activeNote)}
+          note={getNote(activeNote)}
           activeTag={activeTag}
           notes={notes}
           tags={tags}
           onNoteOpen={handleNoteOpen}
+          appState={appState}
+          setAppState={setAppState}
+          saveNote={saveNote}
+          getTag={getTag}
         />
       </div>
       <TagModal
@@ -149,6 +179,7 @@ function App() {
       />
     </div>
   );
+
 }
 
 export default App;

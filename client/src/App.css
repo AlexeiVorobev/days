@@ -14,6 +14,8 @@
   --font-color-light: #777;
   --menu-hover-color: #4d5055;
   --menu-active-color: #444549;
+  --shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  --card-border: 1px solid #ddd;
 }
 
 ::-webkit-scrollbar {
@@ -36,19 +38,20 @@
   }
 
 .main-container {
-  margin: 0 auto;
   height: 100%;
-  width: 816px;
 }
 
 .note-container {
-  margin: 0 16px;
+  margin: 0 auto;
   padding-bottom: 10px;
+  max-width: 816px;
 }
 
 .main-section {
   margin: 0 4px;
   overflow-y: auto;
+  padding: 0 20px;
+
 }
 
 .month-header {
@@ -74,10 +77,13 @@
 }
 
 .tag-box {
+  display: flex;
   border: 1px solid #ccc;
   border-radius: 4px;
+  gap: 4px;
   font-size: 14px;
   padding: 2px 4px;
+  align-items: center;
 }
 
 .note-card {
@@ -85,7 +91,7 @@
   border: 1px solid #ddd;
   margin-bottom: 20px;
   text-align: start;
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  box-shadow: var(--shadow);
   min-height: 100px;
   padding: 10px 20px;
   border-radius: 8px;
@@ -113,7 +119,7 @@ body {
 .App {
   height: 100vh;
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: 260px 1fr;
   grid-template-rows: 70px 1fr;
 }
 
@@ -161,9 +167,14 @@ body {
   align-items: center;
 }
 
-.header-title {
+.header-title, input.note-title {
   font-size: 26px;
   font-weight: bold;
+}
+
+input {
+  border: none;
+  outline: none;
 }
 
 #loginBtn span {
@@ -301,8 +312,77 @@ h1 {
 
 button {
   border: none;
+  background-color: white;
 }
 
 #menuNewNote span {
   color: rgb(1, 180, 1);
+}
+
+.ql-editor {
+  width: 8.5in;
+  min-height: 11in;
+  padding: 40px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, .5);
+  background-color: white;
+}
+
+.ql-container.ql-snow {
+  border: none;
+  max-width: 816px;
+  margin: 20px auto;
+}
+
+.editor {
+  border: none;
+  width: 100%;
+}
+
+.ql-toolbar.ql-snow {
+  display: flex;
+  justify-content: left;
+  position: sticky;
+  top: 0;
+  border: none;
+  z-index: 1;
+  background-color: white;
+  width: 100%;
+}
+
+.note-control-panel {
+  display: flex;
+  position: sticky;
+  bottom: 0;
+  background-color: white;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 40px;
+}
+
+.note-control-panel .icon-btn span {
+  font-size: 16px;
+}
+
+.tag-box div.text {
+  padding-bottom: 4px;
+}
+
+.dropdown {
+  z-index: 2;
+  float: right;
+  position: relative;
+  display: inline;
+}
+
+.dropdown-content {
+  position: absolute;
+  box-shadow: var(--shadow);
+  border: var(--card-border);
+  right: 0;
+
+}
+
+.dropdown-btn {
+  padding: 10px ;
 }
