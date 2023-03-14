@@ -54,6 +54,12 @@ function App() {
     setActiveNote(noteId);
   };
 
+  const handleDeleteNote = function (id) {
+    const notesUpdated = notes.filter(note => note.id !== id)
+    setNotes(notesUpdated);
+    setAppState('noteList')
+  }
+
   const handleCreateNote = function () {
     const newNote = {
       id: uuid(),
@@ -96,6 +102,10 @@ function App() {
   useEffect(() => {
     localStorage.setItem("tags", JSON.stringify(tags));
   }, [tags]);
+
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }, [notes]);
 
   const [tagModalActive, setTagModalActive] = useState(false);
 
@@ -145,6 +155,7 @@ function App() {
         note={getNote(activeNote)}
         appState={appState}
         onTitleChange={handleTitleChange}
+        onDeleteNote={handleDeleteNote}
       />
       <Sidebar
         tags={tags}
