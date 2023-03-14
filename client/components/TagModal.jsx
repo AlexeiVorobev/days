@@ -27,7 +27,8 @@ export default function TagModal({
     tagsUpdated.current = updatedTagsUpdated;
   }
 
-  const deleteHandler = function(id) {
+  const deleteHandler = function(id, e) {
+    e.preventDefault();
     if (confirm("Tag will be deleted. It will be removed from all note instances, but all notes persist.")) {
       onDeleteTag(id)
     }
@@ -75,7 +76,7 @@ export default function TagModal({
               </span>
             </button>
             <input type="text" defaultValue={tag.name} onChange={(e) => handleTagChange(tag.id, e.target.value)} />
-            <button className="icon-btn" onClick={() => deleteHandler(tag.id)}>
+            <button className="icon-btn" onClick={(e) => deleteHandler(tag.id, e)}>
               <span className="material-symbols-outlined">delete</span>
             </button>
             <button className="icon-btn" type="button" onClick={() => submitTagChange(tag.id)}>

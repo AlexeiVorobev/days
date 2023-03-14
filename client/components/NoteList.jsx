@@ -10,7 +10,7 @@ const NoteList = ({ notes, tags, activeTag, onNoteOpen, appState, setAppState, g
     else
         str = str.toString();
 
-    return str.replace( /(<([^>]+)>)/ig, '');
+    return str.replace( /(<([^>]+)>)/ig, ' ');
 }
 
   const getNotesByTag = function (notes, tag) {

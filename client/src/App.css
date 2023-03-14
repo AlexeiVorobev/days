@@ -391,4 +391,5 @@ button {
 
 .dropdown-btn {
   padding: 10px ;
+  min-width: 100px;
 }

@@ -11,7 +11,7 @@ const Header = ({ title, note, appState, onTitleChange, onDeleteNote }) => {
     }
   }, [appState]);
 
-  const [NoteDropdownActive, setNoteDropdownActive] = useState(false);
+  const [noteDropdownState, setNoteDropdownState] = useState(false);
 
   if (appState === "note") {
     return (
@@ -28,13 +28,13 @@ const Header = ({ title, note, appState, onTitleChange, onDeleteNote }) => {
           <button
             className="icon-btn"
             id="loginBtn"
-            onClick={() => setNoteDropdownActive(!NoteDropdownActive)}
+            onClick={() => setNoteDropdownState(noteDropdownState ? false : 'main')}
           >
             <span className="material-symbols-outlined">more_horiz</span>
           </button>
           <NoteMenuDropdown
-            isActive={NoteDropdownActive}
-            setIsActive={setNoteDropdownActive}
+            dropdownState={noteDropdownState}
+            setDropdownState={setNoteDropdownState}
             note={note}
             onDeleteNote={onDeleteNote}
           />

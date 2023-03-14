@@ -1,7 +1,7 @@
 import React from 'react'
 import { useRef, useEffect } from 'react';
 
-export default function NoteMenuDropdown({isActive, tags, setIsActive, onDeleteNote, note}) {
+export default function NoteMenuDropdown({dropdownState, tags, setDropdownState, onDeleteNote, note}) {
 
   const modalRef = useRef();
   
@@ -14,7 +14,7 @@ export default function NoteMenuDropdown({isActive, tags, setIsActive, onDeleteN
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
-        setIsActive(false);
+        setDropdownState(false);
       }
     };
   
@@ -25,7 +25,7 @@ export default function NoteMenuDropdown({isActive, tags, setIsActive, onDeleteN
     };
   }, [modalRef]);
 
-  if (isActive) {
+  if (dropdownState) {
     return (
       <div className='dropdown-content' ref={modalRef}>
         <button className='dropdown-btn' type='button' onClick={() => deleteHandler(note.id)}>Delete</button>
