@@ -49,7 +49,7 @@ function App() {
   const [appState, setAppState] = useState(null);
   const [activeNote, setActiveNote] = useState(null);
   const [activeTag, setActiveTag] = useState(null);
-  const [checkedTags, setCheckedTags] = useState(null);
+  const [checkedTags, setCheckedTags] = useState([]);
 
   const handleNoteOpen = function (noteId) {
     setActiveNote(noteId);
@@ -87,7 +87,7 @@ function App() {
     setNotes(notesUpdated);
   }
 
-  const getNote = function (id) {
+  function getNote (id) {
     return notes.find((note) => note.id === id);
   };
 
