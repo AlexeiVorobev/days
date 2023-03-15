@@ -19,7 +19,6 @@ const Sidebar = ({
   };
 
   const handleNewNoteClick = function () {
-    setActiveTag(null);
     onCreateNote();
 
   };

@@ -62,12 +62,13 @@ function App() {
   }
 
   const handleCreateNote = function () {
+    console.log(activeNote)
     const newNote = {
       id: uuid(),
       title: "",
       body: "New note there",
       date: formatISO(new Date(), { representation: "date" }),
-      tagList: [],
+      tagList: activeTag ? [activeTag] : [],
     };
     setNotes([newNote, ...notes]);
     setActiveNote(newNote.id);
