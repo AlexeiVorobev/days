@@ -337,6 +337,7 @@ button {
   border: none;
   max-width: 816px;
   margin: 20px auto;
+  padding: 0 20px;
 }
 
 .editor {
@@ -382,11 +383,17 @@ button {
 }
 
 .dropdown-content {
+  background-color: white;
   position: absolute;
   box-shadow: var(--shadow);
   border: var(--card-border);
   right: 0;
+}
 
+.dropdown-content label {
+  display: flex;
+  gap: 6px;
+  padding: 10px;
 }
 
 .dropdown-btn {

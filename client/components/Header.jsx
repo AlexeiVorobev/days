@@ -1,7 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import NoteMenuDropdown from "./NoteMenuDropdown";
 
-const Header = ({ title, note, appState, onTitleChange, onDeleteNote }) => {
+const Header = ({
+  title,
+  note,
+  appState,
+  onTitleChange,
+  onDeleteNote,
+  tags,
+  onUpdateNoteTag,
+  checkedTags,
+  setCheckedTags,
+}) => {
   const titleRef = useRef();
 
   // Focus on title input if title is empty
@@ -28,7 +38,9 @@ const Header = ({ title, note, appState, onTitleChange, onDeleteNote }) => {
           <button
             className="icon-btn"
             id="loginBtn"
-            onClick={() => setNoteDropdownState(noteDropdownState ? false : 'main')}
+            onClick={() =>
+              setNoteDropdownState(noteDropdownState ? false : "main")
+            }
           >
             <span className="material-symbols-outlined">more_horiz</span>
           </button>
@@ -37,6 +49,10 @@ const Header = ({ title, note, appState, onTitleChange, onDeleteNote }) => {
             setDropdownState={setNoteDropdownState}
             note={note}
             onDeleteNote={onDeleteNote}
+            tags={tags}
+            onUpdateNoteTag={onUpdateNoteTag}
+            checkedTags={checkedTags}
+            setCheckedTags={setCheckedTags}
           />
         </div>
       </div>

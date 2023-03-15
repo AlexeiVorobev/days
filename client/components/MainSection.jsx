@@ -11,13 +11,21 @@ const MainSection = ({
   appState,
   setAppState,
   saveNote,
-  getTag
+  getTag,
+  checkedTags,
+  setCheckedTags,
 }) => {
-  if (appState === 'note') {
+  if (appState === "note") {
     return (
-        <NotePage note={note} saveNote={saveNote} getTag={getTag} />
+      <NotePage
+        note={note}
+        saveNote={saveNote}
+        getTag={getTag}
+        checkedTags={checkedTags}
+        setCheckedTags={setCheckedTags}
+      />
     );
-  }  else {
+  } else {
     return (
       <div className="main-container">
         <NoteList

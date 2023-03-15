@@ -49,6 +49,7 @@ function App() {
   const [appState, setAppState] = useState(null);
   const [activeNote, setActiveNote] = useState(null);
   const [activeTag, setActiveTag] = useState(null);
+  const [checkedTags, setCheckedTags] = useState(null);
 
   const handleNoteOpen = function (noteId) {
     setActiveNote(noteId);
@@ -136,6 +137,18 @@ function App() {
     localStorage.setItem("notes", JSON.stringify(notes));
   };
 
+  const handleUpdateNoteTag = function(noteId, tagId) {
+    const noteIndex = notes.findIndex(note => note.id === noteId);
+    const notesUpdated = notes;
+    if (notesUpdated[noteIndex].tagList.includes(tagId)) {
+      notesUpdated[noteIndex].tagList = notesUpdated[noteIndex].tagList.filter(id => id !== tagId)
+    } else {
+      notesUpdated[noteIndex].tagList.push(tagId)
+    }
+    setNotes(notesUpdated);
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }
+
   const handleUpdateTag = function (tagUpdated) {
     const tagsUpdated = tags.map((tag) => {
       if (tag.id === tagUpdated.id) {
@@ -151,11 +164,15 @@ function App() {
   return (
     <div className="App">
       <Header
+      tags={tags}
         title={getTitle()}
         note={getNote(activeNote)}
         appState={appState}
         onTitleChange={handleTitleChange}
         onDeleteNote={handleDeleteNote}
+        onUpdateNoteTag={handleUpdateNoteTag}
+        checkedTags={checkedTags}
+        setCheckedTags={setCheckedTags}
       />
       <Sidebar
         tags={tags}
@@ -178,6 +195,8 @@ function App() {
           setAppState={setAppState}
           saveNote={saveNote}
           getTag={getTag}
+          checkedTags={checkedTags}
+        setCheckedTags={setCheckedTags}
         />
       </div>
       <TagModal
