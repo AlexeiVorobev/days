@@ -12,7 +12,6 @@ export default function TagModal({
     return "";
   }
 
-  // const [tagsUpdated, setTagsUpdated] = useState([...tags]);
   const tagsUpdated = useRef([...tags]);
   const newTagNameRef = useRef();
 
@@ -40,8 +39,14 @@ export default function TagModal({
     onUpdateTag(tagUpdated);
   }
 
+  function onOverlayClick(e) {
+    if (e.target.classList.contains('overlay')) {
+      onClose()
+    }
+  }
+
   return (
-    <div className="overlay">
+    <div className="overlay" onClick={(e) => onOverlayClick(e)}>
       <form className="modal">
         <h1>Edit tags</h1>
         <div className="modal-tag">
