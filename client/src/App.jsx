@@ -121,6 +121,7 @@ function App() {
     if (idToDelete === activeTag) {
       setActiveTag(null);
     }
+    setAppState('noteList')
     setTags(tags.filter((tag) => tag.id !== idToDelete));
     const notesUpdated = notes.map((note) => {
       note.tagList = note.tagList.filter((id) => id !== idToDelete);
