@@ -10,7 +10,10 @@ const Header = ({
   tags,
   onUpdateNoteTag,
   checkedTags,
+  activeNoteDate,
+  setActiveNoteDate,
   setCheckedTags,
+  onNoteDateChange
 }) => {
   const titleRef = useRef();
 
@@ -45,6 +48,8 @@ const Header = ({
             <span className="material-symbols-outlined">more_horiz</span>
           </button>
           <NoteMenuDropdown
+            activeNoteDate={activeNoteDate}
+            setActiveNoteDate={setActiveNoteDate}
             dropdownState={noteDropdownState}
             setDropdownState={setNoteDropdownState}
             note={note}
@@ -53,6 +58,7 @@ const Header = ({
             onUpdateNoteTag={onUpdateNoteTag}
             checkedTags={checkedTags}
             setCheckedTags={setCheckedTags}
+            onNoteDateChange={onNoteDateChange}
           />
         </div>
       </div>

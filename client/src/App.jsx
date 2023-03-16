@@ -50,19 +50,20 @@ function App() {
   const [activeNote, setActiveNote] = useState(null);
   const [activeTag, setActiveTag] = useState(null);
   const [checkedTags, setCheckedTags] = useState([]);
+  const [activeNoteDate, setActiveNoteDate] = useState(null);
 
   const handleNoteOpen = function (noteId) {
     setActiveNote(noteId);
   };
 
   const handleDeleteNote = function (id) {
-    const notesUpdated = notes.filter(note => note.id !== id)
+    const notesUpdated = notes.filter((note) => note.id !== id);
     setNotes(notesUpdated);
-    setAppState('noteList')
-  }
+    setAppState("noteList");
+  };
 
   const handleCreateNote = function () {
-    console.log(activeNote)
+    console.log(activeNote);
     const newNote = {
       id: uuid(),
       title: "",
@@ -75,22 +76,34 @@ function App() {
     setAppState("note");
   };
 
-  const handleTitleChange = function(newTitle) {
+  const handleNoteDateChange = function (noteId, newDate) {
+    const newNotes = notes;
+    newNotes.forEach(note => {
+      if (note.id === noteId) {
+        note.date = newDate
+      }
+      return;
+    })
+    newNotes.sort(utils.sortByDate)
+    setNotes(newNotes);
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }
 
-    const notesUpdated = notes.map(note => {
+  const handleTitleChange = function (newTitle) {
+    const notesUpdated = notes.map((note) => {
       if (note.id === activeNote) {
         note.title = newTitle;
         return note;
       } else {
         return note;
       }
-    })
+    });
     setNotes(notesUpdated);
-  }
-
-  function getNote (id) {
-    return notes.find((note) => note.id === id);
   };
+
+  function getNote(id) {
+    return notes.find((note) => note.id === id);
+  }
 
   const getTitle = function () {
     if (activeTag) return getTag(activeTag).name;
@@ -122,7 +135,7 @@ function App() {
     if (idToDelete === activeTag) {
       setActiveTag(null);
     }
-    setAppState('noteList')
+    setAppState("noteList");
     setTags(tags.filter((tag) => tag.id !== idToDelete));
     const notesUpdated = notes.map((note) => {
       note.tagList = note.tagList.filter((id) => id !== idToDelete);
@@ -139,17 +152,19 @@ function App() {
     localStorage.setItem("notes", JSON.stringify(notes));
   };
 
-  const handleUpdateNoteTag = function(noteId, tagId) {
-    const noteIndex = notes.findIndex(note => note.id === noteId);
+  const handleUpdateNoteTag = function (noteId, tagId) {
+    const noteIndex = notes.findIndex((note) => note.id === noteId);
     const notesUpdated = notes;
     if (notesUpdated[noteIndex].tagList.includes(tagId)) {
-      notesUpdated[noteIndex].tagList = notesUpdated[noteIndex].tagList.filter(id => id !== tagId)
+      notesUpdated[noteIndex].tagList = notesUpdated[noteIndex].tagList.filter(
+        (id) => id !== tagId
+      );
     } else {
-      notesUpdated[noteIndex].tagList.push(tagId)
+      notesUpdated[noteIndex].tagList.push(tagId);
     }
     setNotes(notesUpdated);
     localStorage.setItem("notes", JSON.stringify(notes));
-  }
+  };
 
   const handleUpdateTag = function (tagUpdated) {
     const tagsUpdated = tags.map((tag) => {
@@ -166,7 +181,7 @@ function App() {
   return (
     <div className="App">
       <Header
-      tags={tags}
+        tags={tags}
         title={getTitle()}
         note={getNote(activeNote)}
         appState={appState}
@@ -175,6 +190,9 @@ function App() {
         onUpdateNoteTag={handleUpdateNoteTag}
         checkedTags={checkedTags}
         setCheckedTags={setCheckedTags}
+        activeNoteDate={activeNoteDate}
+        setActiveNoteDate={setActiveNoteDate}
+        onNoteDateChange={handleNoteDateChange}
       />
       <Sidebar
         tags={tags}
@@ -198,7 +216,9 @@ function App() {
           saveNote={saveNote}
           getTag={getTag}
           checkedTags={checkedTags}
-        setCheckedTags={setCheckedTags}
+          setCheckedTags={setCheckedTags}
+          activeNoteDate={activeNoteDate}
+          setActiveNoteDate={setActiveNoteDate}
         />
       </div>
       <TagModal
@@ -211,7 +231,6 @@ function App() {
       />
     </div>
   );
-
 }
 
 export default App;

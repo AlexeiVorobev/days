@@ -14,6 +14,8 @@ const MainSection = ({
   getTag,
   checkedTags,
   setCheckedTags,
+  activeNoteDate,
+  setActiveNoteDate
 }) => {
   if (appState === "note") {
     return (
@@ -23,6 +25,8 @@ const MainSection = ({
         getTag={getTag}
         checkedTags={checkedTags}
         setCheckedTags={setCheckedTags}
+        activeNoteDate={activeNoteDate}
+        setActiveNoteDate={setActiveNoteDate}
       />
     );
   } else {

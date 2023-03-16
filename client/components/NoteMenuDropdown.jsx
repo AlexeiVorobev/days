@@ -8,15 +8,23 @@ export default function NoteMenuDropdown({
   note,
   onUpdateNoteTag,
   checkedTags,
-  setCheckedTags
+  setCheckedTags,
+  activeNoteDate,
+  setActiveNoteDate,
+  onNoteDateChange,
 }) {
   const modalRef = useRef();
-  
+
   const deleteHandler = function (id) {
     if (confirm("Do you want to delete the note?")) {
       onDeleteNote(id);
     }
   };
+
+  const changeDateHandler = function (noteId, newDate) {
+    setActiveNoteDate(newDate);
+    onNoteDateChange(noteId, newDate);
+  }
 
   const handleTagChange = function (tagId) {
     const newCheckedTags = checkedTags.includes(tagId)
@@ -61,6 +69,13 @@ export default function NoteMenuDropdown({
         >
           Edit tags
         </button>
+        <button
+          className="dropdown-btn"
+          type="button"
+          onClick={() => setDropdownState("date")}
+        >
+          Change date
+        </button>
       </div>
     );
   } else if (dropdownState === "tags") {
@@ -76,6 +91,20 @@ export default function NoteMenuDropdown({
             {tag.name}
           </label>
         ))}
+      </div>
+    );
+  } else if (dropdownState === "date") {
+    return (
+      <div className="dropdown-content" ref={modalRef}>
+        <div className="dropdown-btn">
+          <input
+            type="date"
+            name=""
+            id=""
+            defaultValue={activeNoteDate}
+            onChange={(e) => changeDateHandler(note.id, e.target.value)}
+          />
+        </div>
       </div>
     );
   }

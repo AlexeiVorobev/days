@@ -3,13 +3,16 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import format from "date-fns/format";
 
-const NotePage = ({ note, saveNote, getTag, checkedTags, setCheckedTags }) => {
+const NotePage = ({ note, saveNote, getTag, checkedTags, setCheckedTags, activeNoteDate, setActiveNoteDate }) => {
   const [content, setContent] = useState("");
-  const date = new Date(note.date);
 
   useEffect(() => {
     setCheckedTags(note.tagList);
   },[]);
+
+  useEffect(() => {
+    setActiveNoteDate(note.date);
+  }, [])
 
   useEffect(() => {
     setContent(note.body);
@@ -24,7 +27,7 @@ const NotePage = ({ note, saveNote, getTag, checkedTags, setCheckedTags }) => {
     <div className="main-container">
       <ReactQuill theme="snow" value={content} onChange={handleChange} />
       <div className="note-control-panel">
-        <div className="card-date">{format(date, "dd MMMM y")}</div>
+        <div className="card-date">{format(new Date(activeNoteDate), "dd MMMM y")}</div>
         {
         checkedTags.map((tagId) => (
           <div key={tagId} className="tag-box">

@@ -9,3 +9,9 @@ export const sortTags = function (a, b) {
     }
     return 0;
   }
+
+  export const sortByDate = function(a, b) {
+    var c = new Date(a.date);
+    var d = new Date(b.date);
+    return d-c;
+  }
