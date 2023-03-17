@@ -3,6 +3,13 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import format from "date-fns/format";
 
+const toolbarOptions = [
+  [{ 'header': [1, 2, 3, false] }],
+  ['bold', 'italic', 'underline'],
+  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+  ['clean']
+];
+
 const NotePage = ({ note, saveNote, getTag, checkedTags, setCheckedTags, activeNoteDate, setActiveNoteDate }) => {
   const [content, setContent] = useState("");
 
@@ -25,7 +32,7 @@ const NotePage = ({ note, saveNote, getTag, checkedTags, setCheckedTags, activeN
 
   return (
     <div className="main-container">
-      <ReactQuill theme="snow" value={content} onChange={handleChange} />
+      <ReactQuill  modules={{ toolbar: toolbarOptions }} theme="snow" value={content} onChange={handleChange} />
       <div className="note-control-panel">
         <div className="card-date">{format(new Date(activeNoteDate), "dd MMMM y")}</div>
         {

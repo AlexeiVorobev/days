@@ -193,6 +193,15 @@ input {
   align-items: center;
 }
 
+button.icon-btn.black span {
+  color: black;
+}
+
+.header .right {
+  display: flex;
+  gap: 18px;
+}
+
 .logo {
   display: flex;
   padding: 12px 24px;

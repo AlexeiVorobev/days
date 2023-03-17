@@ -193,6 +193,7 @@ function App() {
         activeNoteDate={activeNoteDate}
         setActiveNoteDate={setActiveNoteDate}
         onNoteDateChange={handleNoteDateChange}
+        setAppState={setAppState}
       />
       <Sidebar
         tags={tags}

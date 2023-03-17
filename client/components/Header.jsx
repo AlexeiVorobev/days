@@ -13,7 +13,8 @@ const Header = ({
   activeNoteDate,
   setActiveNoteDate,
   setCheckedTags,
-  onNoteDateChange
+  onNoteDateChange,
+  setAppState
 }) => {
   const titleRef = useRef();
 
@@ -26,6 +27,10 @@ const Header = ({
 
   const [noteDropdownState, setNoteDropdownState] = useState(false);
 
+  const handleClickBackArrow = function() {
+    setAppState('home')
+  }
+
   if (appState === "note") {
     return (
       <div className="header" style={{ boxShadow: "none" }}>
@@ -37,29 +42,34 @@ const Header = ({
           placeholder="Untitled"
           ref={titleRef}
         />
-        <div className="dropdown">
-          <button
-            className="icon-btn"
-            id="loginBtn"
-            onClick={() =>
-              setNoteDropdownState(noteDropdownState ? false : "main")
-            }
-          >
-            <span className="material-symbols-outlined">more_horiz</span>
+        <div className="right">
+          <button className="icon-btn black" onClick={() => handleClickBackArrow()}>
+            <span className="material-symbols-outlined">arrow_back</span>
           </button>
-          <NoteMenuDropdown
-            activeNoteDate={activeNoteDate}
-            setActiveNoteDate={setActiveNoteDate}
-            dropdownState={noteDropdownState}
-            setDropdownState={setNoteDropdownState}
-            note={note}
-            onDeleteNote={onDeleteNote}
-            tags={tags}
-            onUpdateNoteTag={onUpdateNoteTag}
-            checkedTags={checkedTags}
-            setCheckedTags={setCheckedTags}
-            onNoteDateChange={onNoteDateChange}
-          />
+          <div className="dropdown">
+            <button
+              className="icon-btn"
+              id="loginBtn"
+              onClick={() =>
+                setNoteDropdownState(noteDropdownState ? false : "main")
+              }
+            >
+              <span className="material-symbols-outlined">more_horiz</span>
+            </button>
+            <NoteMenuDropdown
+              activeNoteDate={activeNoteDate}
+              setActiveNoteDate={setActiveNoteDate}
+              dropdownState={noteDropdownState}
+              setDropdownState={setNoteDropdownState}
+              note={note}
+              onDeleteNote={onDeleteNote}
+              tags={tags}
+              onUpdateNoteTag={onUpdateNoteTag}
+              checkedTags={checkedTags}
+              setCheckedTags={setCheckedTags}
+              onNoteDateChange={onNoteDateChange}
+            />
+          </div>
         </div>
       </div>
     );
