@@ -14,7 +14,7 @@ const Header = ({
   setActiveNoteDate,
   setCheckedTags,
   onNoteDateChange,
-  setAppState
+  setAppState,
 }) => {
   const titleRef = useRef();
 
@@ -27,23 +27,30 @@ const Header = ({
 
   const [noteDropdownState, setNoteDropdownState] = useState(false);
 
-  const handleClickBackArrow = function() {
-    setAppState('home')
-  }
+  const handleClickBackArrow = function () {
+    setAppState("home");
+  };
 
   if (appState === "note") {
     return (
       <div className="header" style={{ boxShadow: "none" }}>
-        <input
-          className="note-title"
-          type="text"
-          value={note.title}
-          onChange={(e) => onTitleChange(e.target.value)}
-          placeholder="Untitled"
-          ref={titleRef}
-        />
+        <Overlay />
+        <div className="left">
+          <ToggleBtn />
+          <input
+            className="note-title"
+            type="text"
+            value={note.title}
+            onChange={(e) => onTitleChange(e.target.value)}
+            placeholder="Untitled"
+            ref={titleRef}
+          />
+        </div>
         <div className="right">
-          <button className="icon-btn black" onClick={() => handleClickBackArrow()}>
+          <button
+            className="icon-btn black"
+            onClick={() => handleClickBackArrow()}
+          >
             <span className="material-symbols-outlined">arrow_back</span>
           </button>
           <div className="dropdown">
@@ -76,10 +83,36 @@ const Header = ({
   } else {
     return (
       <div className="header">
+        <Overlay onClick={toggleMenu} />
+        <ToggleBtn />
         <div className="header-title">{title}</div>
       </div>
     );
   }
 };
+
+const toggleMenu = function () {
+  const sidebar = document.querySelector(".sidebar");
+  const overlay = document.querySelector(".sidebar-overlay");
+  if (!overlay.classList.contains('active')) {
+    sidebar.classList.add("active");
+    overlay.classList.add("active");
+  } else {
+    sidebar.classList.remove('active');
+    overlay.classList.remove('active');
+  }
+};
+
+function Overlay() {
+  return <div className="sidebar-overlay" onClick={toggleMenu}></div>;
+}
+
+function ToggleBtn() {
+  return (
+    <button className="toggle-menu-btn" onClick={toggleMenu}>
+      <span className="material-symbols-outlined black">menu</span>
+    </button>
+  );
+}
 
 export default Header;

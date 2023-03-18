@@ -1,15 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap'); */
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
 :root {
   --primary-color: #2e2e35;
-  --margin-m: 24px;
+  --margin-m: 18px;
   --font-color-primary: #222222;
   --font-color-light: #777;
   --menu-hover-color: #4d5055;
@@ -40,6 +43,13 @@
 .main-container {
   height: 100%;
   justify-content: center;
+}
+
+.App {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  grid-template-rows: 70px 1fr;
 }
 
 .note-container {
@@ -122,15 +132,8 @@ button {
   text-align: center;
 }
 
-.App {
-  height: 100vh;
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  grid-template-rows: 70px 1fr;
-}
-
 .sidebar {
-
+  z-index: 3;
   background-color: #2e2e35;
   color: white;
   height: 100%;
@@ -197,15 +200,17 @@ button.icon-btn.black span {
   color: black;
 }
 
-.header .right {
+.right, .left {
   display: flex;
   gap: 18px;
 }
 
 .logo {
   display: flex;
-  padding: 12px 24px;
+  padding: 12px var(--margin-m);
   justify-content: start;
+  font-size: 40px;
+  font-weight: bold;
 }
 
 .logo img {
@@ -236,6 +241,10 @@ button.icon-btn.black span {
   'wght' 400,
   'GRAD' 0,
   'opsz' 48
+}
+
+.material-symbols-outlined.black {
+  color: black;
 }
 
 #editTags span {
@@ -342,6 +351,10 @@ button {
   background-color: white;
 }
 
+p {
+  font-size: 16px;
+}
+
 .ql-container.ql-snow {
   border: none;
   max-width: 816px;
@@ -385,7 +398,7 @@ button {
 }
 
 .dropdown {
-  z-index: 2;
+  z-index: 1;
   float: right;
   position: relative;
   display: inline;
@@ -408,4 +421,50 @@ button {
 .dropdown-btn {
   padding: 10px ;
   min-width: 100px;
+}
+
+.sidebar-overlay {
+  top: 0;
+  left: 0;
+  z-index: 2;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background-color: black;
+  opacity: 50%;
+  display: none;
+}
+
+.toggle-menu-btn {
+  display: none;
+}
+
+@media only screen and (max-width: 700px) {
+  .sidebar {
+    position: fixed;
+    width: 260px;
+    left: -260px;
+    transition: left 0.3s ease-out;
+  }
+
+  .toggle-menu-btn {
+    display: block;
+  }
+
+  .sidebar.active {
+    left: 0px;
+  }
+
+  .sidebar-overlay.active {
+    display: block;
+  }
+
+  .App {
+    grid-template-columns: 1fr;
+    grid-template-rows: 70px 1fr;
+  }
+
+  .header {
+    grid-column: 1;
+  }
 }

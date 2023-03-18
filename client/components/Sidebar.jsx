@@ -43,7 +43,8 @@ const Sidebar = ({
   return (
     <div className="sidebar">
       <div className="logo">
-        <img src={logoUrl} alt="" />
+        {/* <img src={logoUrl} alt="" /> */}
+        Days
       </div>
       <div className="menu-item" id="menuNewNote" onClick={handleNewNoteClick}>
         <span className="material-symbols-outlined">add_notes</span>
