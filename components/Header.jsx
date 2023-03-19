@@ -84,8 +84,10 @@ const Header = ({
     return (
       <div className="header">
         <Overlay onClick={toggleMenu} />
-        <ToggleBtn />
-        <div className="header-title">{title}</div>
+        <div className="left">
+          <ToggleBtn />
+          <div className="header-title">{title}</div>
+        </div>
       </div>
     );
   }
