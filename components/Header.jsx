@@ -56,7 +56,7 @@ const Header = ({
           <div className="dropdown">
             <button
               className="icon-btn"
-              id="loginBtn"
+              id="noteDropdownBtn"
               onClick={() =>
                 setNoteDropdownState(noteDropdownState ? false : "main")
               }

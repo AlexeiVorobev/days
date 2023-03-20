@@ -1,13 +1,10 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap'); */
-/* @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap'); */
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,600;1,400;1,600&display=swap');
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
 }
 
 :root {
@@ -19,26 +16,27 @@
   --menu-active-color: #444549;
   --shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   --card-border: 1px solid #ddd;
+  --hover-color-light: hsl(0, 0%, 88%);
 }
 
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 6px;
-  }
+  width: 8px;
+  height: 6px;
+}
 ::-webkit-scrollbar-track {
-    border-radius: 10px;
-    background: rgba(0,0,0,0.1);
-  }
-::-webkit-scrollbar-thumb{
-    border-radius: 10px;
-    background: rgba(0,0,0,0.2);
-  }
-::-webkit-scrollbar-thumb:hover{
-  	background: rgba(0,0,0,0.4);
-  }
-::-webkit-scrollbar-thumb:active{
-  	background: rgba(0,0,0,.9);
-  }
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.1);
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+::-webkit-scrollbar-thumb:active {
+  background: rgba(0, 0, 0, 0.9);
+}
 
 .main-container {
   height: 100%;
@@ -48,7 +46,7 @@
 .App {
   height: 100vh;
   display: grid;
-  grid-template-columns: 260px 1fr;
+  grid-template-columns: 240px 1fr;
   grid-template-rows: 70px 1fr;
 }
 
@@ -61,21 +59,19 @@
 }
 
 .main-section {
-  margin: 0 4px;
+  margin: 0;
   overflow-y: auto;
-
 }
 
 .month-header {
-  font-size: 22px;
+  font-size: 1.5rem;
   margin-bottom: 10px;
   margin-top: 36px;
   font-weight: bold;
-  
 }
 
 .card-date {
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--font-color-light);
   height: 100%;
 }
@@ -90,10 +86,10 @@
 
 .tag-box {
   display: flex;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  background-color: var(--hover-color-light);
+  border-radius: 0.25rem;
   gap: 4px;
-  font-size: 14px;
+  font-size: 0.865rem;
   padding: 2px 4px;
   align-items: center;
 }
@@ -110,17 +106,17 @@
 }
 
 .note-card h1 {
-  font-size: 16px;
+  font-size: 1rem;
   margin-bottom: 8px;
 }
 
 .note-card p {
-  font-size: 16px;
+  font-size: 1rem;
   color: var(--font-color-light);
 }
 
 body {
-  font-family: sans-serif;
+  font-size: 1rem;
   color: #444;
 }
 
@@ -141,7 +137,8 @@ button {
   grid-row: 1 / 3;
 }
 
-.sidebar span, .header span {
+.sidebar span,
+.header span {
   color: white;
 }
 
@@ -160,9 +157,8 @@ button {
   bottom: 30px;
 
   color: #ccc;
-  font-size: 36px;
+  font-size: 2rem;
   font-weight: normal;
-
 }
 
 .header {
@@ -176,8 +172,9 @@ button {
   align-items: center;
 }
 
-.header-title, input.note-title {
-  font-size: 26px;
+.header-title,
+input.note-title {
+  font-size: 1.75rem;
   font-weight: bold;
 }
 
@@ -186,9 +183,8 @@ input {
   outline: none;
 }
 
-#loginBtn span {
+#noteDropdownBtn span {
   color: var(--font-color-primary);
-  font-size: 24px;
 }
 
 #loginBtn {
@@ -200,7 +196,8 @@ button.icon-btn.black span {
   color: black;
 }
 
-.right, .left {
+.right,
+.left {
   display: flex;
   gap: 18px;
 }
@@ -209,8 +206,8 @@ button.icon-btn.black span {
   display: flex;
   padding: 12px var(--margin-m);
   justify-content: start;
-  font-size: 40px;
-  font-weight: bold;
+  font-size: 2.5rem;
+  font-weight: 600;
 }
 
 .logo img {
@@ -236,19 +233,11 @@ button.icon-btn.black span {
 
 .material-symbols-outlined {
   color: gray;
-  font-variation-settings:
-  'FILL' 1,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 48
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 48;
 }
 
 .material-symbols-outlined.black {
   color: black;
-}
-
-#editTags span {
-  font-size: 22px;
 }
 
 #menuNewNote {
@@ -256,27 +245,27 @@ button.icon-btn.black span {
 }
 
 #menuNewNote span {
-  color: rgb(156, 16, 207);
+  color: rgb(170, 61, 209);
 }
 
 .overlay {
   position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  z-index: 5; /* Sit on top */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
 .modal {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
   padding: 15px;
+  background-color: white;
 }
 
 .modal input,
@@ -288,7 +277,7 @@ button.icon-btn.black span {
   border: none;
   border-radius: 4px;
   box-sizing: border-box;
-  font-size: 16px;
+  font-size: 1rem;
   color: var(--font-color-primary);
 }
 
@@ -306,10 +295,15 @@ button.icon-btn.black span {
 .icon-btn {
   cursor: pointer;
   border: none;
+  border-radius: 0.25rem;
+}
+
+.icon-btn:hover {
+  background-color: rgb(219, 219, 219);
 }
 
 .icon-btn span {
-  font-size: 20px;
+  font-size: 1.5rem;
 }
 
 h1 {
@@ -317,19 +311,21 @@ h1 {
 }
 
 .modal h1 {
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .btn-regular {
+  border-radius: 0.25rem;
   border: none;
   color: var(--font-color-primary);
   cursor: pointer;
   padding: 8px 16px;
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
-.btn-regular:hover {
+.btn-regular:hover, .dropdown-btn:hover {
   color: black;
+  background-color: var(--hover-color-light)
 }
 
 .btn-panel {
@@ -341,18 +337,19 @@ h1 {
 button {
   border: none;
   background-color: white;
+  font-size: 0.875rem;
 }
 
 .ql-editor {
   max-width: 8.5in;
   min-height: 11in;
   padding: 40px;
-  box-shadow: 0 0 5px 0 rgba(0, 0, 0, .5);
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
   background-color: white;
 }
 
 p {
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .ql-container.ql-snow {
@@ -373,6 +370,7 @@ p {
   position: sticky;
   top: 0;
   border: none;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   z-index: 1;
   background-color: white;
   width: 100%;
@@ -381,6 +379,7 @@ p {
 .note-control-panel {
   display: flex;
   position: sticky;
+  border-top: 1px solid var(--hover-color-light);
   bottom: 0;
   background-color: white;
   justify-content: flex-start;
@@ -390,7 +389,7 @@ p {
 }
 
 .note-control-panel .icon-btn span {
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .tag-box div.text {
@@ -419,7 +418,7 @@ p {
 }
 
 .dropdown-btn {
-  padding: 10px ;
+  padding: 10px;
   min-width: 100px;
 }
 
@@ -439,12 +438,33 @@ p {
   display: none;
 }
 
+h1, h2, h3, h4, strong {
+  font-weight: 600;
+}
+
 @media only screen and (max-width: 700px) {
   .sidebar {
     position: fixed;
-    width: 260px;
-    left: -260px;
+    width: 240px;
+    left: -240px;
     transition: left 0.3s ease-out;
+  }
+
+  .ql-container.ql-snow {
+    padding: 0;
+    margin: 0;
+  }
+
+  .ql-editor {
+    width: 100%;
+  }
+
+  .modal {
+    margin-top: 40px;
+  }
+
+  .overlay {
+    align-items: start;
   }
 
   .toggle-menu-btn {
