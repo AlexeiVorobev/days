@@ -107,7 +107,7 @@ function App() {
 
   const getTitle = function () {
     if (activeTag) return getTag(activeTag).name;
-    return "All notes";
+    return "Timeline";
   };
 
   const getTag = function (id) {
@@ -194,6 +194,7 @@ function App() {
         setActiveNoteDate={setActiveNoteDate}
         onNoteDateChange={handleNoteDateChange}
         setAppState={setAppState}
+        onCreateNote={handleCreateNote}
       />
       <Sidebar
         tags={tags}

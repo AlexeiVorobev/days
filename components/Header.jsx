@@ -15,12 +15,13 @@ const Header = ({
   setCheckedTags,
   onNoteDateChange,
   setAppState,
+  onCreateNote,
 }) => {
   const titleRef = useRef();
 
   // Focus on title input if title is empty
   useEffect(() => {
-    if (note && note.title === "") {
+    if (appState === 'note' && note.title === "") {
       titleRef.current.focus();
     }
   }, [appState]);
@@ -88,6 +89,11 @@ const Header = ({
           <ToggleBtn />
           <div className="header-title">{title}</div>
         </div>
+        <div className="right">
+          <button id="HeaderNewNote" onClick={onCreateNote}>
+            <span className="material-symbols-outlined black">add</span>
+          </button>
+        </div>
       </div>
     );
   }
@@ -96,12 +102,12 @@ const Header = ({
 const toggleMenu = function () {
   const sidebar = document.querySelector(".sidebar");
   const overlay = document.querySelector(".sidebar-overlay");
-  if (!overlay.classList.contains('active')) {
+  if (!overlay.classList.contains("active")) {
     sidebar.classList.add("active");
     overlay.classList.add("active");
   } else {
-    sidebar.classList.remove('active');
-    overlay.classList.remove('active');
+    sidebar.classList.remove("active");
+    overlay.classList.remove("active");
   }
 };
 

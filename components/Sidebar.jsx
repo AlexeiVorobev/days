@@ -20,7 +20,6 @@ const Sidebar = ({
 
   const handleNewNoteClick = function () {
     onCreateNote();
-
   };
 
   const handleMenuHomeClick = function () {
