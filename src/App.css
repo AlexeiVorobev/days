@@ -117,7 +117,7 @@
 
 body {
   font-size: 1rem;
-  color: #444;
+  color: var(--font-color-primary);
 }
 
 button {
@@ -174,13 +174,17 @@ button {
 
 .header-title,
 input.note-title {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-weight: bold;
 }
 
 input {
   border: none;
   outline: none;
+}
+
+#noteDropdownBtn {
+  padding: var(--margin-m);
 }
 
 #noteDropdownBtn span {
@@ -245,13 +249,12 @@ button.icon-btn.black span {
   border-bottom: 1px solid var(--menu-hover-color);
 }
 
-#HeaderNewNote span {
-  /* font-size: 2rem; */
-  padding: 8px;
-}
-
 #menuNewNote span {
   color: rgb(170, 61, 209);
+}
+
+#headerNewNote {
+  padding: var(--margin-m);
 }
 
 .overlay {
@@ -442,7 +445,7 @@ p {
 
 .toggle-menu-btn {
   display: none;
-  padding: 6px;
+  padding: var(--margin-m);
 }
 
 h1, h2, h3, h4, strong {
@@ -494,14 +497,15 @@ h1, h2, h3, h4, strong {
 
   .header {
     grid-column: 1;
+    padding: 0;
+  }
+
+  .header .left, .header .right {
+    gap: 0;
   }
 
   input.note-title {
     max-width: calc(100vw - 160px);
-    font-size: 1.5rem;
-  }
-
-  .header-title {
     font-size: 1.5rem;
   }
 

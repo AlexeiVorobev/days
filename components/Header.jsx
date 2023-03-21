@@ -90,7 +90,7 @@ const Header = ({
           <div className="header-title">{title}</div>
         </div>
         <div className="right">
-          <button id="HeaderNewNote" onClick={onCreateNote}>
+          <button id="headerNewNote" onClick={onCreateNote}>
             <span className="material-symbols-outlined black">add</span>
           </button>
         </div>
