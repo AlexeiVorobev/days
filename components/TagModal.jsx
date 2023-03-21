@@ -90,7 +90,7 @@ export default function TagModal({
           </div>
         ))}
         <div className="btn-panel">
-          <button className="btn-regular" type="button" onClick={onClose}>
+          <button className="btn-special" type="button" onClick={onClose}>
             Close
           </button>
         </div>
