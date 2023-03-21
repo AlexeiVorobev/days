@@ -1,5 +1,4 @@
 import React from "react";
-import { useRef } from "react";
 import format from "date-fns/format";
 
 const NoteList = ({ notes, tags, activeTag, onNoteOpen, appState, setAppState, getTag }) => {

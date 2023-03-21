@@ -67,7 +67,7 @@ function App() {
     const newNote = {
       id: uuid(),
       title: "",
-      body: "New note there",
+      body: "",
       date: formatISO(new Date(), { representation: "date" }),
       tagList: activeTag ? [activeTag] : [],
     };

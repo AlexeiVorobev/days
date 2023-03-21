@@ -5,8 +5,9 @@ import format from "date-fns/format";
 
 const toolbarOptions = [
   [{ 'header': [1, 2, 3, false] }],
-  ['bold', 'italic', 'underline'],
+  ['bold', 'italic', 'underline', 'strike' ],
   [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+  [{ 'color': [] }, 'link'],
   ['clean']
 ];
 

@@ -477,6 +477,8 @@ h1, h2, h3, h4, strong {
 
   .ql-editor {
     width: 100%;
+    box-shadow: none;
+    border: none;
     padding: 16px;
     min-height: calc(100vh - 150px);
   }
@@ -530,11 +532,24 @@ h1, h2, h3, h4, strong {
   }
 
   .note-control-panel {
-    padding: 8px var(--margin-m);
+    padding: 10px var(--margin-m);
   }
 
   #headerNewNote {
     margin: var(--margin-m);
+  }
+
+  .ql-toolbar.ql-snow {
+    overflow-x: scroll;
+    max-width: 100%;
+  }
+
+  .ql-toolbar.ql-snow .ql-formats {
+    display: flex;
+
+  }
+  .ql-toolbar::-webkit-scrollbar {
+    display: none;
   }
 
 }
