@@ -49,14 +49,14 @@ const Header = ({
         </div>
         <div className="right">
           <button
-            className="icon-btn black"
+            className="icon-btn black header-btn"
             onClick={() => handleClickBackArrow()}
           >
             <span className="material-symbols-outlined">arrow_back</span>
           </button>
           <div className="dropdown">
             <button
-              className="icon-btn"
+              className="icon-btn header-btn"
               id="noteDropdownBtn"
               onClick={() =>
                 setNoteDropdownState(noteDropdownState ? false : "main")
@@ -90,7 +90,7 @@ const Header = ({
           <div className="header-title">{title}</div>
         </div>
         <div className="right">
-          <button id="headerNewNote" onClick={onCreateNote}>
+          <button id="headerNewNote" onClick={onCreateNote} className="header-btn">
             <span className="material-symbols-outlined black">add</span>
           </button>
         </div>
@@ -118,7 +118,7 @@ function Overlay() {
 function ToggleBtn() {
   return (
     <button className="toggle-menu-btn" onClick={toggleMenu}>
-      <span className="material-symbols-outlined black">menu</span>
+      <span className="material-symbols-outlined black header-btn">menu</span>
     </button>
   );
 }
