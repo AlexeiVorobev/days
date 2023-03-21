@@ -1,6 +1,8 @@
 import React from "react";
 import format from "date-fns/format";
 
+const MAX_PREVIEW_TEXT_LENGTH = 250;
+
 const NoteList = ({ notes, tags, activeTag, onNoteOpen, appState, setAppState, getTag }) => {
 
   function removeTags(str) {
@@ -36,6 +38,10 @@ const NoteList = ({ notes, tags, activeTag, onNoteOpen, appState, setAppState, g
       <h1 className="month-header">{format(currentDate, 'MMMM')} {format(currentDate, 'y')}</h1>
       {notesToDisplay.map((note) => {
         const date = new Date(note.date);
+        let text = removeTags(note.body);
+        if (text.length > MAX_PREVIEW_TEXT_LENGTH) {
+          text = text.substring(0, MAX_PREVIEW_TEXT_LENGTH - 1) + '...';
+        }
         let month = null;
         let year = null;
         if (format(currentDate, 'M') !== format(date, 'M') || format(currentDate, 'y') !== format(date, 'y')) {
@@ -51,7 +57,7 @@ const NoteList = ({ notes, tags, activeTag, onNoteOpen, appState, setAppState, g
           }
         <div className="note-card" onClick={() => handleNoteClick(note.id)}>
           <h1>{note.title}</h1>
-          <p>{removeTags(note.body)}</p>
+          <p>{text}</p>
           
           <div className="card-bottom-panel">
             <div className="card-date">{format(date, 'dd MMMM y')}</div>
