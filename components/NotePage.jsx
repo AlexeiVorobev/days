@@ -4,7 +4,8 @@ import "react-quill/dist/quill.snow.css";
 import format from "date-fns/format";
 
 const toolbarOptions = [
-  [{ 'header': [1, 2, 3, false] }],
+  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+  [{ 'header': 1 }, { 'header': 2 }],
   ['bold', 'italic', 'underline', 'strike' ],
   [{ 'list': 'ordered'}, { 'list': 'bullet' }],
   [{ 'color': [] }, 'link'],
