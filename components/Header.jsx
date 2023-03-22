@@ -34,7 +34,7 @@ const Header = ({
 
   if (appState === "note") {
     return (
-      <div className="header" style={{ boxShadow: "none" }}>
+      <div className="header" style={{ boxShadow: "none", border: "none" }}>
         <Overlay />
         <div className="left">
           <ToggleBtn />

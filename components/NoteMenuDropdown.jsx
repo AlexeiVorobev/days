@@ -74,7 +74,7 @@ export default function NoteMenuDropdown({
           type="button"
           onClick={() => setDropdownState("date")}
         >
-          Change date
+          Set date
         </button>
       </div>
     );

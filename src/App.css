@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,600;1,400;1,600&display=swap");
 
 * {
   margin: 0;
@@ -17,6 +17,7 @@
   --shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   --card-border: 1px solid #ddd;
   --hover-color-light: hsl(0, 0%, 88%);
+  --border-mobile: 1px solid lightgray;
 }
 
 ::-webkit-scrollbar {
@@ -143,6 +144,7 @@ button {
 .sidebar span,
 .header span {
   color: white;
+  color: var(--font-color-light);
 }
 
 .main {
@@ -249,7 +251,7 @@ button.icon-btn.black span {
 }
 
 #menuNewNote {
-  border-bottom: 1px solid var(--menu-hover-color);
+  border-bottom: 1px solid var(--menu-active-color);
 }
 
 #menuNewNote span {
@@ -265,7 +267,7 @@ button.icon-btn.black span {
   display: flex;
   justify-content: center;
   align-items: center;
-  
+
   z-index: 5; /* Sit on top */
   left: 0;
   top: 0;
@@ -326,7 +328,8 @@ h1 {
   font-size: 1rem;
 }
 
-.btn-regular, .btn-special {
+.btn-regular,
+.btn-special {
   border-radius: 0.4rem;
   border: none;
   color: var(--font-color-primary);
@@ -340,9 +343,10 @@ h1 {
   background-color: #2e2e35;
 }
 
-.btn-regular:hover, .dropdown-btn:hover {
+.btn-regular:hover,
+.dropdown-btn:hover {
   color: black;
-  background-color: var(--hover-color-light)
+  background-color: var(--hover-color-light);
 }
 
 .btn-panel {
@@ -358,6 +362,7 @@ button {
 }
 
 .ql-editor {
+  font-size: 1rem;
   max-width: 8.5in;
   min-height: 11in;
   padding: 40px;
@@ -431,6 +436,7 @@ p {
   box-shadow: var(--shadow);
   border: var(--card-border);
   right: 0;
+  margin-right: 8px;
 }
 
 .dropdown-content label {
@@ -461,7 +467,11 @@ p {
   margin: var(--margin-m);
 }
 
-h1, h2, h3, h4, strong {
+h1,
+h2,
+h3,
+h4,
+strong {
   font-weight: 600;
 }
 
@@ -517,9 +527,17 @@ h1, h2, h3, h4, strong {
   .header {
     grid-column: 1;
     padding: 0;
+    box-shadow: var(--shadow);
+    /* border-bottom: var(--border-mobile); */
   }
 
-  .header .left, .header .right {
+  .note-card {
+    box-shadow: none;
+    border: var(--border-mobile);
+  }
+
+  .header .left,
+  .header .right {
     gap: 0;
   }
 
@@ -530,6 +548,7 @@ h1, h2, h3, h4, strong {
 
   .note-container {
     padding: 0 16px;
+    padding-bottom: 10px;
   }
 
   ::-webkit-scrollbar {
@@ -543,6 +562,7 @@ h1, h2, h3, h4, strong {
     position: fixed;
     top: 70px;
     box-shadow: var(--shadow);
+    /* border-bottom: var(--border-mobile) */
   }
 
   #headerNewNote {
@@ -555,7 +575,7 @@ h1, h2, h3, h4, strong {
     position: fixed;
     bottom: 0;
     top: auto;
-    padding: 10px 0px;
+    padding: 10px;
   }
 
   .ql-toolbar::-webkit-scrollbar {
@@ -566,9 +586,6 @@ h1, h2, h3, h4, strong {
   .ql-snow .ql-picker.ql-expanded .ql-picker-options {
     bottom: 100%;
     top: auto;
-}
-
-.ql-picker-options {
-}
+  }
 
 }
