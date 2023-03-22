@@ -1,5 +1,5 @@
 import React from "react";
-import logoUrl from "../src/assets/days-logo-white.svg";
+import logoUrl from "../src/assets/logo.svg";
 
 const Sidebar = ({
   tags,
@@ -42,7 +42,7 @@ const Sidebar = ({
   return (
     <div className="sidebar">
       <div className="logo">
-        {/* <img src={logoUrl} alt="" /> */}
+        <img src={logoUrl} alt="" />
         Days
       </div>
       <div className="menu-item" id="menuNewNote" onClick={handleNewNoteClick}>

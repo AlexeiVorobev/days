@@ -217,12 +217,16 @@ button.icon-btn.black span {
   display: flex;
   padding: 12px var(--margin-m);
   justify-content: start;
+  align-items: center;
   font-size: 2.5rem;
   font-weight: 600;
 }
 
 .logo img {
-  width: 90px;
+  filter: opacity(0.9);
+  margin-right: 8px;
+  height: 0.8em;
+  width: 30px;
 }
 
 .menu-item {
