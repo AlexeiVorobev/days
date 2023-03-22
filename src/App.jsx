@@ -12,22 +12,28 @@ const DEFAULT_NOTES = [
   {
     id: uuid(),
     title: "About foxes and dogs",
-    body: "Quick brown fox jumps over the lazy dog.",
+    body: `<h1>Foxes and dogs</h1><p>Quick brown fox jumps over the lazy dog.</p><h2>Manual</h2><ol>
+    <li>Find a fox</li><li>Find a dog</li><li>Jump fox over the dog</li></ol>`,
     date: formatISO(new Date(), { representation: "date" }),
-    tagList: ["0", "1"],
+    tagList: ["1"],
   },
   {
     id: uuid(),
-    title: "About foxes and dogs",
-    body: "Quick brown fox jumps over the lazy dog.",
-    date: "2023-01-30",
-    tagList: ["0", "1"],
-  },
-  {
-    id: uuid(),
-    title: "Big dump",
-    body: "Dear diary. Today I went to the bathroom and took a major shit. Damn, that was intense! Even my neighbours came down to...",
-    date: "2022-12-31",
+    title: "About Lorem Ipsum",
+    body: `<h1>Lorem Ipsum</h1><h2>What is Lorem Ipsum?</h2><p class="ql-align-justify">
+    <strong>Lorem Ipsum </strong>is simply dummy text of the printing and typesetting industry. 
+    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a 
+    galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
+     into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release
+      of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like 
+      Aldus PageMaker including versions of Lorem Ipsum.</p><h2>Why do we use it?</h2><p class="ql-align-justify">
+      It is a long established fact that a reader will be distracted by the readable content of a page when looking 
+      at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as
+       opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing 
+       packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' 
+       will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by
+        accident, sometimes on purpose (injected humour and the like).</p>`,
+    date: formatISO(new Date(), { representation: "date" }),
     tagList: ["0"],
   },
 ];
@@ -78,16 +84,16 @@ function App() {
 
   const handleNoteDateChange = function (noteId, newDate) {
     const newNotes = notes;
-    newNotes.forEach(note => {
+    newNotes.forEach((note) => {
       if (note.id === noteId) {
-        note.date = newDate
+        note.date = newDate;
       }
       return;
-    })
-    newNotes.sort(utils.sortByDate)
+    });
+    newNotes.sort(utils.sortByDate);
     setNotes(newNotes);
     localStorage.setItem("notes", JSON.stringify(notes));
-  }
+  };
 
   const handleTitleChange = function (newTitle) {
     const notesUpdated = notes.map((note) => {

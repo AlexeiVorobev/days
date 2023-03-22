@@ -144,7 +144,7 @@ button {
 .sidebar span,
 .header span {
   color: white;
-  color: var(--font-color-light);
+  color: #ddd;
 }
 
 .main {
