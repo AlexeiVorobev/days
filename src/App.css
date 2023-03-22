@@ -90,7 +90,7 @@
 .tag-box {
   display: flex;
   background-color: var(--hover-color-light);
-  border-radius: 0.25rem;
+  border-radius: 0.3rem;
   gap: 4px;
   font-size: 0.865rem;
   padding: 2px 4px;
@@ -213,6 +213,7 @@ button.icon-btn.black span {
 }
 
 .logo {
+  color: #ddd;
   display: flex;
   padding: 12px var(--margin-m);
   justify-content: start;
@@ -225,12 +226,17 @@ button.icon-btn.black span {
 }
 
 .menu-item {
+  color: #ddd;
   width: 100%;
   cursor: pointer;
   display: flex;
   gap: 4px;
   align-items: center;
   padding: 12px var(--margin-m);
+}
+
+.menu-item span {
+  color: #ddd;
 }
 
 .menu-item.active {
@@ -542,7 +548,7 @@ strong {
   }
 
   input.note-title {
-    max-width: calc(100vw - 160px);
+    max-width: calc(100vw - 148px);
     font-size: 1.5rem;
   }
 
@@ -575,7 +581,7 @@ strong {
     position: fixed;
     bottom: 0;
     top: auto;
-    padding: 10px;
+    padding: 10px var(--margin-m);
   }
 
   .ql-toolbar::-webkit-scrollbar {

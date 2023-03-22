@@ -7,8 +7,7 @@ const toolbarOptions = [
   [{ 'header': 1 }, { 'header': 2 }],
   ['bold', 'italic', 'underline', 'strike' ],
   [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-  [{ 'color': [] }, 'link'],
-  ['clean']
+  [{ 'color': [] }, 'link', 'clean'],
 ];
 
 const NotePage = ({ note, saveNote, getTag, checkedTags, setCheckedTags, activeNoteDate, setActiveNoteDate }) => {
