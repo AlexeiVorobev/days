@@ -12,7 +12,7 @@ const DEFAULT_NOTES = [
   {
     id: uuid(),
     title: "About foxes and dogs",
-    body: `<h1>Foxes and dogs</h1><p>Quick brown fox jumps over the lazy dog.</p><h2>Manual</h2><ol>
+    text: `<h1>Foxes and dogs</h1><p>Quick brown fox jumps over the lazy dog.</p><h2>Manual</h2><ol>
     <li>Find a fox</li><li>Find a dog</li><li>Jump fox over the dog</li></ol>`,
     date: formatISO(new Date(), { representation: "date" }),
     tagList: ["1"],
@@ -20,7 +20,7 @@ const DEFAULT_NOTES = [
   {
     id: uuid(),
     title: "About Lorem Ipsum",
-    body: `<h1>Lorem Ipsum</h1><h2>What is Lorem Ipsum?</h2><p class="ql-align-justify">
+    text: `<h1>Lorem Ipsum</h1><h2>What is Lorem Ipsum?</h2><p class="ql-align-justify">
     <strong>Lorem Ipsum </strong>is simply dummy text of the printing and typesetting industry. 
     Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a 
     galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
@@ -73,7 +73,7 @@ function App() {
     const newNote = {
       id: uuid(),
       title: "",
-      body: "",
+      text: "",
       date: formatISO(new Date(), { representation: "date" }),
       tagList: activeTag ? [activeTag] : [],
     };
@@ -153,7 +153,7 @@ function App() {
   const saveNote = function (id, content) {
     const noteIndex = notes.findIndex((note) => note.id === id);
     const notesUpdated = notes;
-    notesUpdated[noteIndex].body = content;
+    notesUpdated[noteIndex].text = content;
     setNotes(notesUpdated);
     localStorage.setItem("notes", JSON.stringify(notes));
   };

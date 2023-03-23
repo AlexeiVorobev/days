@@ -38,7 +38,7 @@ const NoteList = ({ notes, tags, activeTag, onNoteOpen, appState, setAppState, g
       <h1 className="month-header">{format(currentDate, 'MMMM')} {format(currentDate, 'y')}</h1>
       {notesToDisplay.map((note) => {
         const date = new Date(note.date);
-        let text = removeTags(note.body);
+        let text = removeTags(note.text);
         if (text.length > MAX_PREVIEW_TEXT_LENGTH) {
           text = text.substring(0, MAX_PREVIEW_TEXT_LENGTH - 1) + '...';
         }

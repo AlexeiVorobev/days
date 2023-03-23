@@ -22,7 +22,7 @@ const NotePage = ({ note, saveNote, getTag, checkedTags, setCheckedTags, activeN
   }, [])
 
   useEffect(() => {
-    setContent(note.body);
+    setContent(note.text);
   }, []);
 
   const handleChange = function (content) {
