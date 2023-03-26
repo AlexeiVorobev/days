@@ -1,5 +1,5 @@
 import React from "react";
-import logoUrl from "../src/assets/logo.svg";
+import logoUrl from "../assets/logo.svg";
 
 const Sidebar = ({
   tags,

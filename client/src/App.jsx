@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import MainSection from "../components/MainSection";
-import Sidebar from "../components/Sidebar";
+import MainSection from "./components/MainSection";
+import Sidebar from "./components/Sidebar";
 import "./App.css";
-import Header from "../components/Header";
+import Header from "./components/Header";
 import uuid from "react-uuid";
-import TagModal from "../components/TagModal";
+import TagModal from "./components/TagModal";
 import * as utils from "./utils";
 import { formatISO } from "date-fns";
 
