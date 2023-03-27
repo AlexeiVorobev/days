@@ -15,7 +15,6 @@ const Header = ({
   setCheckedTags,
   onNoteDateChange,
   setAppState,
-  onCreateNote,
 }) => {
   const titleRef = useRef();
 
@@ -90,9 +89,7 @@ const Header = ({
           <div className="header-title">{title}</div>
         </div>
         <div className="right">
-          <button id="headerNewNote" onClick={onCreateNote} className="header-btn">
-            <span className="material-symbols-outlined black">add</span>
-          </button>
+          
         </div>
       </div>
     );

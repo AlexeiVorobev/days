@@ -8,7 +8,7 @@
 }
 
 :root {
-  --primary-color: #2e2e35;
+  --primary-color: #232328;
   --margin-m: 16px;
   --font-color-primary: #222222;
   --font-color-light: #777;
@@ -18,6 +18,8 @@
   --card-border: 1px solid #ddd;
   --hover-color-light: hsl(0, 0%, 88%);
   --border-mobile: 1px solid lightgray;
+  --sassy-color: rgb(17, 96, 180);
+  --sassy-color-light: rgb(59, 130, 206);
 }
 
 ::-webkit-scrollbar {
@@ -97,6 +99,41 @@
   align-items: center;
 }
 
+.header-login {
+  color: #ddd;
+  display: flex;
+  padding: 12px var(--margin-m);
+  justify-content: start;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.header-login span {
+  font-weight: normal;
+}
+
+.profile-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  background-color: lightgray;
+}
+
+.profile-wrapper span {
+  color: gray !important;
+  font-size: 28px;
+}
+
+a {
+  text-decoration: none;
+  color: lightgray;
+  font-weight: normal;
+}
+
 .note-card {
   cursor: pointer;
   border: 1px solid #ddd;
@@ -134,7 +171,7 @@ button {
 
 .sidebar {
   z-index: 3;
-  background-color: #2e2e35;
+  background-color: var(--primary-color);
   color: white;
   height: 100%;
   grid-column: 1 / 2;
@@ -212,16 +249,6 @@ button.icon-btn.black span {
   gap: 18px;
 }
 
-.logo {
-  color: #ddd;
-  display: flex;
-  padding: 12px var(--margin-m);
-  justify-content: start;
-  align-items: center;
-  font-size: 2.5rem;
-  font-weight: 600;
-}
-
 .logo img {
   filter: opacity(0.9);
   margin-right: 8px;
@@ -252,6 +279,7 @@ button.icon-btn.black span {
 }
 
 .material-symbols-outlined {
+  font-size: 1.4rem;
   color: gray;
   font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 48;
 }
@@ -261,15 +289,29 @@ button.icon-btn.black span {
 }
 
 #menuNewNote {
-  border-bottom: 1px solid var(--menu-active-color);
+  border-top: 1px solid var(--menu-active-color);
 }
 
 #menuNewNote span {
-  color: rgb(17, 180, 17);
+  color: var(--sassy-color-light);
 }
 
 #headerNewNote {
-  padding: 0;
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  box-shadow: var(--shadow);
+  border-radius: 100%;
+  background-color: var(--sassy-color);
+}
+
+#headerNewNote span {
+  color: white;
 }
 
 .overlay {
@@ -322,10 +364,6 @@ button.icon-btn.black span {
   border-radius: 0.25rem;
 }
 
-.icon-btn:hover {
-  background-color: rgb(219, 219, 219);
-}
-
 .icon-btn span {
   font-size: 1.5rem;
 }
@@ -371,6 +409,10 @@ button {
   font-size: 0.875rem;
 }
 
+.icon-btn span:hover {
+  color: var(--sassy-color) !important;
+}
+
 .ql-editor {
   font-size: 1rem;
   max-width: 8.5in;
@@ -397,6 +439,19 @@ p {
   width: 100%;
 }
 
+.header-shadow {
+  box-shadow: var(--shadow);
+  background-color: white;
+  width: 100%;
+  height: 44px;
+  border-bottom: var(--card-border);
+  position: fixed;
+  top: 70px;
+  z-index: 1;
+}
+
+
+
 .ql-toolbar.ql-snow {
   display: flex;
   padding: 8px 20px;
@@ -404,7 +459,7 @@ p {
   position: sticky;
   top: 0;
   border: none;
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  box-shadow: var(--shadow);
   z-index: 1;
   background-color: white;
   width: 100%;
@@ -418,7 +473,7 @@ p {
   display: flex;
   position: fixed;
   width: 100%;
-  /* border-top: 1px solid var(--hover-color-light); */
+  border-top: 1px solid var(--hover-color-light);
   bottom: 0;
   background-color: white;
   justify-content: flex-start;
@@ -447,6 +502,7 @@ p {
   position: absolute;
   box-shadow: var(--shadow);
   border: var(--card-border);
+  border-radius: 4px;
   right: 0;
   margin-right: 8px;
 }
@@ -459,6 +515,7 @@ p {
 
 .dropdown-btn {
   padding: 10px;
+  border-radius: 4px;
   min-width: 100px;
 }
 
@@ -493,6 +550,10 @@ strong {
     width: 240px;
     left: -240px;
     transition: left 0.3s ease-out;
+  }
+
+  .header-shadow {
+    display: none;
   }
 
   .ql-container.ql-snow {
@@ -575,6 +636,7 @@ strong {
     position: fixed;
     top: 70px;
     box-shadow: var(--shadow);
+    border: none;
     /* border-bottom: var(--border-mobile) */
   }
 
@@ -591,6 +653,7 @@ strong {
     padding: 10px var(--margin-m);
   }
 
+
   .ql-toolbar::-webkit-scrollbar {
     display: none;
   }
@@ -599,6 +662,11 @@ strong {
   .ql-snow .ql-picker.ql-expanded .ql-picker-options {
     bottom: 100%;
     top: auto;
+  }
+
+  #headerNewNote {
+    bottom: 10px;
+    right: 10px;
   }
 
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import logoUrl from "../assets/logo.svg";
+import { Link } from "react-router-dom";
 
 const Sidebar = ({
   tags,
@@ -10,12 +11,11 @@ const Sidebar = ({
   appState,
   setAppState,
   onCreateNote,
-
 }) => {
   const handleMenuTagClick = function (id) {
     setActiveTag(id);
     setActiveNote(null);
-    setAppState('tag')
+    setAppState("tag");
   };
 
   const handleNewNoteClick = function () {
@@ -25,7 +25,7 @@ const Sidebar = ({
   const handleMenuHomeClick = function () {
     setActiveTag(null);
     setActiveNote(null);
-    setAppState('home');
+    setAppState("home");
   };
 
   const menuTags = tags.map((tag) => (
@@ -41,9 +41,23 @@ const Sidebar = ({
 
   return (
     <div className="sidebar">
-      <div className="logo">
-        <img src={logoUrl} alt="" />
-        Days
+      <div className="header-login">
+        <div className="profile-wrapper" style={{ marginRight: "10px" }}>
+          <span className="material-symbols-outlined">person</span>
+        </div>
+        <Link to={'/login'}>Login 
+        <span
+          className="material-symbols-outlined "
+          style={{ 
+            fontSize: "1rem",
+            position: 'relative',
+            top: '3px'
+        }}
+        >
+          login
+        </span>
+        </Link>
+        
       </div>
       <div className="menu-item" id="menuNewNote" onClick={handleNewNoteClick}>
         <span className="material-symbols-outlined">add_notes</span>

@@ -3,7 +3,7 @@ import format from "date-fns/format";
 
 const MAX_PREVIEW_TEXT_LENGTH = 250;
 
-const NoteList = ({ notes, tags, activeTag, onNoteOpen, appState, setAppState, getTag }) => {
+const NoteList = ({ notes, tags, activeTag, onNoteOpen, appState, setAppState, getTag, onCreateNote }) => {
 
   function removeTags(str) {
     if ((str===null) || (str===''))
@@ -35,6 +35,9 @@ const NoteList = ({ notes, tags, activeTag, onNoteOpen, appState, setAppState, g
   
   return (
     <div className="note-container">
+      <button id="headerNewNote" onClick={onCreateNote} className="header-btn">
+            <span className="material-symbols-outlined black">add</span>
+          </button>
       <h1 className="month-header">{format(currentDate, 'MMMM')} {format(currentDate, 'y')}</h1>
       {notesToDisplay.map((note) => {
         const date = new Date(note.date);
@@ -71,6 +74,7 @@ const NoteList = ({ notes, tags, activeTag, onNoteOpen, appState, setAppState, g
         </div>
         )
       })}
+      
     </div>
   );
 };
