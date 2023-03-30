@@ -8,13 +8,11 @@ import Register from './app/pages/Register'
 export default function App() {
   return (
     <div>
-      <Router basename='/days'>
         <Routes>
           <Route path='/' element={<Dashboard/>} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
         </Routes>
-      </Router>
     </div>
   )
 }
