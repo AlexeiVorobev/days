@@ -18,8 +18,13 @@
   --card-border: 1px solid #ddd;
   --hover-color-light: hsl(0, 0%, 88%);
   --border-mobile: 1px solid lightgray;
-  --sassy-color: rgb(17, 96, 180);
+  --sassy-color: rgb(46, 106, 170);
   --sassy-color-light: rgb(59, 130, 206);
+}
+
+input {
+  border: none;
+  outline: none;
 }
 
 ::-webkit-scrollbar {
@@ -47,6 +52,62 @@
   height: 100%;
   justify-content: center;
 }
+
+
+/* FORM */
+
+.form-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: var(--shadow);
+  border: var(--card-border);
+  padding: 40px 80px;
+  
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form-container .heading * {
+  text-align: center;
+}
+
+.form-container h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.form-container input {
+  outline: 1px solid lightgray;
+  border-radius: 4px;
+  padding: 10px 16px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.form-container p {
+   margin-bottom: 30px;
+}
+
+.form-container .btn-special {
+  width: 100%;
+  height: 37px;
+}
+
+.subscript p {
+  margin-top: 30px;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+}
+
+.form-container a {
+  color: var(--sassy-color);
+}
+
+/* ### */
 
 .App {
   height: 100vh;
@@ -220,11 +281,6 @@ input.note-title {
   font-weight: bold;
 }
 
-input {
-  border: none;
-  outline: none;
-}
-
 #noteDropdownBtn {
   margin: var(--margin-m);
 }
@@ -391,6 +447,10 @@ h1 {
   background-color: #2e2e35;
 }
 
+.btn-special:hover {
+  background-color: var(--menu-active-color);
+}
+
 .btn-regular:hover,
 .dropdown-btn:hover {
   color: black;
@@ -545,6 +605,12 @@ strong {
 }
 
 @media only screen and (max-width: 700px) {
+
+  .form-container {
+    border: none;
+    box-shadow: none;
+  }
+  
   .sidebar {
     position: fixed;
     width: 240px;
