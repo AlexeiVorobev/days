@@ -33,14 +33,17 @@ const NotePage = ({ note, saveNote, getTag, checkedTags, setCheckedTags, activeN
   return (
     <div className="main-container">
       <ReactQuill  modules={{ toolbar: toolbarOptions }} theme="snow" value={content} onChange={handleChange} />
-      <div className="note-control-panel">
-        <div className="card-date">{format(new Date(activeNoteDate), "dd MMMM y")}</div>
-        {
-        checkedTags.map((tagId) => (
-          <div key={tagId} className="tag-box">
-            {getTag(tagId).name}
-          </div>
-        ))}
+      <div className="note-control-panel left-right">
+        <div className="left">
+          <div className="card-date">{format(new Date(activeNoteDate), "dd MMMM y")}</div>
+          {
+          checkedTags.map((tagId) => (
+            <div key={tagId} className="tag-box">
+              {getTag(tagId).name}
+            </div>
+          ))}
+        </div>
+        <div className="right"><button className="btn-special">Save</button></div>
       </div>
     </div>
   );

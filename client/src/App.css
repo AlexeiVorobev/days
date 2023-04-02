@@ -53,6 +53,30 @@ input {
   justify-content: center;
 }
 
+/* SPINNER */
+
+.loadingSpinnerContainer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 5000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadingSpinner {
+  width: 64px;
+  height: 64px;
+  border: 8px solid;
+  border-color: #000 transparent #555 transparent;
+  border-radius: 50%;
+  animation: spin 1.2s linear infinite;
+}
+
 
 /* FORM */
 
@@ -184,15 +208,33 @@ input {
   background-color: lightgray;
 }
 
-.profile-wrapper span {
-  color: gray !important;
+.profile-wrapper.isUser {
+  background-color: var(--sassy-color);
+}
+
+.profile-wrapper .profile-letter {
+  color: gray;
   font-size: 28px;
 }
 
-a {
+#profile-placeholder {
+  color: gray;
+  font-size: 26px;
+}
+
+a, .link {
   text-decoration: none;
-  color: lightgray;
+  color: lightgray  !important;
   font-weight: normal;
+  font-size: 0.85rem;
+}
+
+.profile-letter {
+  text-transform: capitalize;
+  color: #ddd !important;
+  font-size: 24px !important;
+  font-weight: bold;
+  user-select: none;
 }
 
 .note-card {
@@ -241,7 +283,6 @@ button {
 
 .sidebar span,
 .header span {
-  color: white;
   color: #ddd;
 }
 
@@ -349,7 +390,7 @@ button.icon-btn.black span {
 }
 
 #menuNewNote span {
-  color: var(--sassy-color-light);
+  color: var(--sassy-color);
 }
 
 #headerNewNote {
@@ -529,14 +570,18 @@ p {
   display: flex;
 }
 
+/* .left-right {
+  display: flex;
+  justify-content: space-between !important;
+} */
+
 .note-control-panel {
   display: flex;
   position: fixed;
   width: 100%;
-  border-top: 1px solid var(--hover-color-light);
   bottom: 0;
   background-color: white;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   gap: 10px;
   padding: 8px 40px;
@@ -603,6 +648,11 @@ h4,
 strong {
   font-weight: 600;
 }
+
+
+
+
+
 
 @media only screen and (max-width: 700px) {
 

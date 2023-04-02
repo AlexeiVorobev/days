@@ -1,8 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { login, reset } from "../features/auth/authSlice";
+import Spinner from "../components/Spinner";
 
-export default function Register() {
+export default function Login() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -11,6 +16,25 @@ export default function Register() {
   });
 
   const { name, email, password, password2 } = formData;
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+
+    if (isSuccess || user) {
+      navigate("/");
+    }
+
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -21,7 +45,17 @@ export default function Register() {
 
   const onSubmit = (e) => {
     e.preventDefault()
+
+    const userData = {
+      email,
+      password
+    }
+    dispatch(login(userData))
   };
+
+  if (isLoading) {
+    return <Spinner />
+  }
 
   return (
     <div className="form-container">
@@ -47,12 +81,12 @@ export default function Register() {
           onChange={onChange}
         />
         <button type="submit" className="btn-special">
-          Sign-up
+          Login
         </button>
       </form>
       <section className="subscript">
-        <p>Already have an account?</p>
-        <Link to="/login">Login</Link>
+        <p>Don't have an account?</p>
+        <Link to="/register">Sign up</Link>
       </section>
     </div>
   );

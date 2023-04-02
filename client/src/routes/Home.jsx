@@ -7,6 +7,9 @@ import uuid from "react-uuid";
 import TagModal from "../components/TagModal";
 import * as utils from "../utils";
 import { formatISO } from "date-fns";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+// import {createNote} from '../features/notes/noteSlice'
 
 const DEFAULT_NOTES = [
   {
@@ -39,6 +42,16 @@ const DEFAULT_NOTES = [
 ];
 
 function Dashboard() {
+
+  const navigate = useNavigate()
+  const {user} = useSelector((state) => state.auth)
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/login')
+    }
+  }, [user, navigate])
+  
   const [notes, setNotes] = useState(
     localStorage.notes ? JSON.parse(localStorage.notes) : DEFAULT_NOTES
   );
@@ -68,8 +81,20 @@ function Dashboard() {
     setAppState("noteList");
   };
 
+  // const handleCreateNote = function () {
+  //   const newNote = {
+  //     id: uuid(),
+  //     title: "",
+  //     text: "",
+  //     date: formatISO(new Date(), { representation: "date" }),
+  //     tagList: activeTag ? [activeTag] : [],
+  //   };
+  //   setNotes([newNote, ...notes]);
+  //   setActiveNote(newNote.id);
+  //   setAppState("note");
+  // };
+
   const handleCreateNote = function () {
-    console.log(activeNote);
     const newNote = {
       id: uuid(),
       title: "",
