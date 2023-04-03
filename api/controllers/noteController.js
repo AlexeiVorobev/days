@@ -14,13 +14,14 @@ const getNotes = asyncHandler(async (req, res) => {
 // @route POST /api/notes
 // @access Private
 const setNote = asyncHandler(async (req, res) => {
-  if (!req.body.text) {
-    res.status(400);
-    throw new Error("Please add a text field");
-  }
+  // if (!req.body.text) {
+  //   res.status(400);
+  //   throw new Error("Please add a text field");
+  // }
   const note = await Note.create({
-    text: req.body.text,
+    date: req.body.date,
     user: req.user.id,
+    tagList: req.body.tagList
   });
 
   res.json(note);

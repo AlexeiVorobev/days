@@ -16,9 +16,7 @@ export default function NoteMenuDropdown({
   const modalRef = useRef();
 
   const deleteHandler = function (id) {
-    if (confirm("Do you want to delete the note?")) {
       onDeleteNote(id);
-    }
   };
 
   const changeDateHandler = function (noteId, newDate) {
@@ -31,7 +29,7 @@ export default function NoteMenuDropdown({
       ? checkedTags.filter((id) => id !== tagId)
       : [...checkedTags, tagId];
     setCheckedTags(newCheckedTags);
-    onUpdateNoteTag(note.id, tagId);
+    onUpdateNoteTag(note._id, tagId);
   };
 
   useEffect(() => {
@@ -58,7 +56,7 @@ export default function NoteMenuDropdown({
         <button
           className="dropdown-btn"
           type="button"
-          onClick={() => deleteHandler(note.id)}
+          onClick={() => deleteHandler(note._id)}
         >
           Delete
         </button>
@@ -102,7 +100,7 @@ export default function NoteMenuDropdown({
             name=""
             id=""
             defaultValue={activeNoteDate}
-            onChange={(e) => changeDateHandler(note.id, e.target.value)}
+            onChange={(e) => changeDateHandler(note._id, e.target.value)}
           />
         </div>
       </div>

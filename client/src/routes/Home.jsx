@@ -9,7 +9,9 @@ import * as utils from "../utils";
 import { formatISO } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-// import {createNote} from '../features/notes/noteSlice'
+import {createNote} from '../features/notes/noteSlice'
+import { getNotes, deleteNote, reset } from "../features/notes/noteSlice";
+import Spinner from '../components/Spinner'
 
 const DEFAULT_NOTES = [
   {
@@ -43,18 +45,32 @@ const DEFAULT_NOTES = [
 
 function Dashboard() {
 
+  const {notes, isLoading, isError, message} = useSelector((state) => state.notes)
+
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const {user} = useSelector((state) => state.auth)
 
   useEffect(() => {
+    if (isError) {
+      console.log(message)
+    }
+    
     if (!user) {
       navigate('/login')
     }
-  }, [user, navigate])
+
+    dispatch(getNotes())
+
+    return () => {
+      dispatch(reset())
+    }
+    
+  }, [user, navigate, isError, message, dispatch])
   
-  const [notes, setNotes] = useState(
-    localStorage.notes ? JSON.parse(localStorage.notes) : DEFAULT_NOTES
-  );
+  // const [notes, setNotes] = useState(
+  //   localStorage.notes ? JSON.parse(localStorage.notes) : DEFAULT_NOTES
+  // );
 
   const [tags, setTags] = useState(
     localStorage.tags
@@ -77,37 +93,24 @@ function Dashboard() {
 
   const handleDeleteNote = function (id) {
     const notesUpdated = notes.filter((note) => note.id !== id);
-    setNotes(notesUpdated);
+    dispatch(deleteNote(id))
     setAppState("noteList");
   };
 
-  // const handleCreateNote = function () {
-  //   const newNote = {
-  //     id: uuid(),
-  //     title: "",
-  //     text: "",
-  //     date: formatISO(new Date(), { representation: "date" }),
-  //     tagList: activeTag ? [activeTag] : [],
-  //   };
-  //   setNotes([newNote, ...notes]);
-  //   setActiveNote(newNote.id);
-  //   setAppState("note");
-  // };
-
   const handleCreateNote = function () {
     const newNote = {
-      id: uuid(),
       title: "",
       text: "",
       date: formatISO(new Date(), { representation: "date" }),
       tagList: activeTag ? [activeTag] : [],
     };
-    setNotes([newNote, ...notes]);
-    setActiveNote(newNote.id);
-    setAppState("note");
+    dispatch(createNote(newNote))
+    // setAppState("note");
+    // setActiveNote(newNote.id);
   };
 
   const handleNoteDateChange = function (noteId, newDate) {
+    if (!newDate) return;
     const newNotes = notes;
     newNotes.forEach((note) => {
       if (note.id === noteId) {
@@ -208,6 +211,41 @@ function Dashboard() {
     tagsUpdated.sort(utils.sortTags);
     setTags(tagsUpdated);
   };
+
+  if (isLoading) {
+    return (
+      <div className="App">
+      <Header
+        tags={tags}
+        title={getTitle()}
+        note={getNote(activeNote)}
+        appState={appState}
+        onTitleChange={handleTitleChange}
+        onDeleteNote={handleDeleteNote}
+        onUpdateNoteTag={handleUpdateNoteTag}
+        checkedTags={checkedTags}
+        setCheckedTags={setCheckedTags}
+        activeNoteDate={activeNoteDate}
+        setActiveNoteDate={setActiveNoteDate}
+        onNoteDateChange={handleNoteDateChange}
+        setAppState={setAppState}
+      />
+      <Sidebar
+        tags={tags}
+        setTagModalActive={setTagModalActive}
+        activeTag={activeTag}
+        setActiveTag={setActiveTag}
+        setActiveNote={setActiveNote}
+        appState={appState}
+        setAppState={setAppState}
+        onCreateNote={handleCreateNote}
+      />
+      <div className="main-section">
+        <Spinner />
+      </div>
+    </div>
+    )
+  }
 
   return (
     <div className="App">

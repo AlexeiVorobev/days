@@ -13,6 +13,7 @@ const noteSchema = mongoose.Schema(
     },
     date: {
         type: String,
+        required: true
     },
     tagList: Array
   },
