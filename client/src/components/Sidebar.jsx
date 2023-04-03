@@ -12,7 +12,6 @@ const Sidebar = ({
   setActiveNote,
   appState,
   setAppState,
-  onCreateNote,
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -29,10 +28,6 @@ const Sidebar = ({
     dispatch(reset())
     navigate('/')
   }
-
-  const handleNewNoteClick = function () {
-    onCreateNote();
-  };
 
   const handleMenuHomeClick = function () {
     setActiveTag(null);
@@ -108,13 +103,9 @@ const Sidebar = ({
           </>
         )}
       </div>
-      <div className="menu-item" id="menuNewNote" onClick={handleNewNoteClick}>
-        <span className="material-symbols-outlined">add_notes</span>
-        New note
-      </div>
       <div
         className={"menu-item " + (activeTag ? "" : "active")}
-        id="menuHome"
+        id="menuHomeBtn"
         onClick={handleMenuHomeClick}
       >
         <span className="material-symbols-outlined">home</span>
@@ -123,7 +114,7 @@ const Sidebar = ({
       <div className="menu-tags">{menuTags}</div>
       <div
         className="menu-item"
-        id="editTags"
+        id="editTagsBtn"
         onClick={() => setTagModalActive(true)}
       >
         <span className="material-symbols-outlined">edit</span>

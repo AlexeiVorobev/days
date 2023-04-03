@@ -238,7 +238,6 @@ function Dashboard() {
         setActiveNote={setActiveNote}
         appState={appState}
         setAppState={setAppState}
-        onCreateNote={handleCreateNote}
       />
       <div className="main-section">
         <Spinner />

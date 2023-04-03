@@ -16,13 +16,13 @@ export default function NoteMenuDropdown({
   const modalRef = useRef();
 
   const deleteHandler = function (id) {
-      onDeleteNote(id);
+    onDeleteNote(id);
   };
 
   const changeDateHandler = function (noteId, newDate) {
     setActiveNoteDate(newDate);
     onNoteDateChange(noteId, newDate);
-  }
+  };
 
   const handleTagChange = function (tagId) {
     const newCheckedTags = checkedTags.includes(tagId)

@@ -390,12 +390,16 @@ button.icon-btn.black span {
   color: black;
 }
 
-#menuNewNote {
+#menuHomeBtn {
   border-top: 1px solid var(--menu-active-color);
 }
 
-#menuNewNote span {
+#menuHomeBtn span {
   color: var(--sassy-color);
+}
+
+#editTagsBtn {
+  border-top: 1px solid var(--menu-active-color);
 }
 
 #headerNewNote {
