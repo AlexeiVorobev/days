@@ -3,15 +3,14 @@ import logoUrl from "../assets/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
+import { setActiveNote } from "../features/notes/noteSlice";
+import { displayNoteList } from "../features/uiSlice";
 
 const Sidebar = ({
   tags,
   setTagModalActive,
   activeTag,
   setActiveTag,
-  setActiveNote,
-  appState,
-  setAppState,
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -19,20 +18,20 @@ const Sidebar = ({
 
   const handleMenuTagClick = function (id) {
     setActiveTag(id);
-    setActiveNote(null);
-    setAppState("tag");
+    dispatch(setActiveNote(null));
+    dispatch(displayNoteList())
   };
 
   const onLogout = () => {
-    dispatch(logout())
-    dispatch(reset())
-    navigate('/')
-  }
+    dispatch(logout());
+    dispatch(reset());
+    navigate("/");
+  };
 
   const handleMenuHomeClick = function () {
     setActiveTag(null);
-    setActiveNote(null);
-    setAppState("home");
+    dispatch(setActiveNote(null));
+    dispatch(displayNoteList())
   };
 
   const menuTags = tags.map((tag) => (
@@ -51,11 +50,14 @@ const Sidebar = ({
       <div className="header-login">
         {user ? (
           <>
-            <div className="profile-wrapper isUser" style={{ marginRight: "10px" }}>
+            <div
+              className="profile-wrapper isUser"
+              style={{ marginRight: "10px" }}
+            >
               <span className="profile-letter">{user.email[0]}</span>
             </div>
             <span
-            className="link"
+              className="link"
               style={{
                 maxWidth: "65%",
                 overflow: "hidden",
@@ -85,7 +87,12 @@ const Sidebar = ({
         ) : (
           <>
             <div className="profile-wrapper" style={{ marginRight: "10px" }}>
-              <span className="material-symbols-outlined" id="profile-placeholder">person</span>
+              <span
+                className="material-symbols-outlined"
+                id="profile-placeholder"
+              >
+                person
+              </span>
             </div>
             <Link to={"/login"}>
               Login

@@ -1,40 +1,21 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { deleteNote } from "../features/notes/noteSlice";
+import { displayNoteList } from "../features/uiSlice";
 
 export default function NoteMenuDropdown({
   dropdownState,
   tags,
   setDropdownState,
-  onDeleteNote,
-  note,
-  onUpdateNoteTag,
-  checkedTags,
-  setCheckedTags,
-  activeNoteDate,
-  setActiveNoteDate,
-  onNoteDateChange,
 }) {
+  const dispatch = useDispatch()
+  const noteId = useSelector(state => state.notes?.activeNote?._id)
   const modalRef = useRef();
 
-  const deleteHandler = function (id) {
-    onDeleteNote(id);
+  const onDeleteNote = function (id) {
+    dispatch(deleteNote(id))
+    dispatch(displayNoteList())
   };
-
-  const changeDateHandler = function (noteId, newDate) {
-    setActiveNoteDate(newDate);
-    onNoteDateChange(noteId, newDate);
-  };
-
-  const handleTagChange = function (tagId) {
-    const newCheckedTags = checkedTags.includes(tagId)
-      ? checkedTags.filter((id) => id !== tagId)
-      : [...checkedTags, tagId];
-    setCheckedTags(newCheckedTags);
-    onUpdateNoteTag(note._id, tagId);
-  };
-
-  useEffect(() => {
-    setCheckedTags(note.tagList);
-  }, [note]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -56,7 +37,7 @@ export default function NoteMenuDropdown({
         <button
           className="dropdown-btn"
           type="button"
-          onClick={() => deleteHandler(note._id)}
+          onClick={() => onDeleteNote(noteId)}
         >
           Delete
         </button>
@@ -84,7 +65,6 @@ export default function NoteMenuDropdown({
             <input
               type="checkbox"
               checked={checkedTags.includes(tag.id)}
-              onChange={() => handleTagChange(tag.id)}
             />
             {tag.name}
           </label>
@@ -99,8 +79,7 @@ export default function NoteMenuDropdown({
             type="date"
             name=""
             id=""
-            defaultValue={activeNoteDate}
-            onChange={(e) => changeDateHandler(note._id, e.target.value)}
+            defaultValue={note.date}
           />
         </div>
       </div>

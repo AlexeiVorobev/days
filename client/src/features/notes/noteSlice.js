@@ -1,6 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import noteService from "./noteService";
-import { sortByDate } from "../../utils";
 
 const initialState = {
     notes: [],
@@ -26,12 +25,12 @@ export const createNote = createAsyncThunk('notes/create', async(noteData, thunk
     }
 })
 
-// Get user notes
+// Get user notes from server
 export const getNotes = createAsyncThunk('notes/getAll', async (_, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
         const notes = await noteService.getNotes(token)
-        return notes.sort(sortByDate);
+        return notes;
     } catch (error) {
         const message =
         (error.response &&
@@ -59,11 +58,29 @@ export const deleteNote = createAsyncThunk('notes/delete', async(id, thunkAPI) =
     }
 })
 
+export const updateNote = createAsyncThunk('notes/update', async(note, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await noteService.updateNote(note, token)
+    } catch (error) {
+        const message =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        return thunkAPI.rejectWithValue(message);
+    }
+})
+
 export const noteSlice = createSlice({
     name: 'note',
     initialState,
     reducers: {
-        reset: (state) => {initialState}
+        reset: (state) => {initialState},
+        setActiveNote: (state, action) => {
+            state.activeNote = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -74,6 +91,7 @@ export const noteSlice = createSlice({
             state.isLoading = false
             state.isSuccess = true
             state.notes.push(action.payload)
+            state.activeNote = action.payload
         })
         .addCase(createNote.rejected, (state, action) => {
             state.isLoading = false
@@ -106,8 +124,27 @@ export const noteSlice = createSlice({
             state.isError = true
             state.message = action.payload
         })
+        .addCase(updateNote.pending, (state) => {
+            state.isLoading = true
+        })
+        .addCase(updateNote.fulfilled, (state, action) => {
+            state.isLoading = false
+            state.isSuccess = true
+            state.isError = false // clear any previous errors
+            const updatedNote = action.payload
+            const index = state.notes.findIndex((n) => n._id === updatedNote._id)
+            if (index !== -1) {
+                state.notes[index] = updatedNote
+            }
+        })
+        .addCase(updateNote.rejected, (state, action) => {
+            state.isLoading = false
+            state.isError = true
+            state.message = action.payload
+        })
     }
 })
 
 export const {reset} = noteSlice.actions
 export default noteSlice.reducer
+export const setActiveNote = createAction('note/setActiveNote');

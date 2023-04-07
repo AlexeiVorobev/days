@@ -1,18 +1,20 @@
 import React from "react";
 import format from "date-fns/format";
+import {sortByDate} from "../utils"
+import { useDispatch, useSelector } from "react-redux";
+import { setActiveNote, createNote } from "../features/notes/noteSlice";
+import { displayNotePage } from "../features/uiSlice";
+import { formatISO } from "date-fns";
 
 const MAX_PREVIEW_TEXT_LENGTH = 250;
 
 const NoteList = ({
-  notes,
-  tags,
   activeTag,
-  onNoteOpen,
-  appState,
-  setAppState,
   getTag,
-  onCreateNote,
 }) => {
+  const dispatch = useDispatch()
+  const notes = useSelector(state => state.notes.notes)
+
   function removeTags(str) {
     if (!str || str === "") return false;
     else str = str.toString();
@@ -20,25 +22,38 @@ const NoteList = ({
     return str.replace(/(<([^>]+)>)/gi, " ");
   }
 
+  const onCreateNote = () => {
+    const newNote = {
+      title: "",
+      text: "",
+      date: formatISO(new Date(), { representation: "date" }),
+      tagList: activeTag ? [activeTag] : [],
+    };
+    dispatch(displayNotePage())
+    dispatch(createNote(newNote))
+  }
+
   const getNotesByTag = function (notes, tag) {
     const notesFiltered = notes.filter((note) => note.tagList.includes(tag));
     return notesFiltered;
   };
 
-  const notesToDisplay = activeTag ? getNotesByTag(notes, activeTag) : notes;
+  const handleNoteClick = function (noteId) {
+    const noteToOpen = notes.find(note => note._id === noteId)
+    dispatch(setActiveNote(noteToOpen))
+    dispatch(displayNotePage())
+  };
+
+  const taggedNotes = activeTag ? getNotesByTag(notes, activeTag) : notes
+  const notesToDisplay = [...taggedNotes].sort(sortByDate);
   if (!notesToDisplay || notesToDisplay.length === 0)
     return (
     <div className="main-empty">No entries
     <button id="headerNewNote" onClick={onCreateNote}>
-        <span className="material-symbols-outlined black">add</span>
+        <span className="material-symbols-outlined black" style={{fontSize: '1.5rem'}}>add</span>
       </button>
     </div>
     );
-
-  const handleNoteClick = function (noteId) {
-    onNoteOpen(noteId);
-    setAppState("note");
-  };
 
   let currentDate = notesToDisplay[0].date
     ? new Date(notesToDisplay[0].date)
@@ -47,7 +62,7 @@ const NoteList = ({
   return (
     <div className="note-container">
       <button id="headerNewNote" onClick={onCreateNote}>
-        <span className="material-symbols-outlined black">add</span>
+        <span className="material-symbols-outlined black" style={{fontSize: '1.5rem'}}>add</span>
       </button>
       <h1 className="month-header">
         {format(currentDate, "MMMM")} {format(currentDate, "y")}
@@ -77,7 +92,7 @@ const NoteList = ({
             ) : (
               ""
             )}
-            <div className="note-card" onClick={() => handleNoteClick(note.id)}>
+            <div className="note-card" onClick={() => handleNoteClick(note._id)}>
               <h1>{note.title}</h1>
               <p>{text}</p>
 

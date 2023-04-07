@@ -1,33 +1,19 @@
 import React from "react";
 import NoteList from "./NoteList";
 import NotePage from "./NotePage";
+import { useSelector } from "react-redux";
 
 const MainSection = ({
-  note,
   activeTag,
-  notes,
   tags,
-  onNoteOpen,
-  appState,
-  setAppState,
-  saveNote,
   getTag,
-  checkedTags,
-  setCheckedTags,
-  activeNoteDate,
-  setActiveNoteDate,
-  onCreateNote
 }) => {
-  if (appState === "note") {
+  const mainView = useSelector(state => state.ui.mainView)
+  
+  if (mainView === "note") {
     return (
       <NotePage
-        note={note}
-        saveNote={saveNote}
         getTag={getTag}
-        checkedTags={checkedTags}
-        setCheckedTags={setCheckedTags}
-        activeNoteDate={activeNoteDate}
-        setActiveNoteDate={setActiveNoteDate}
       />
     );
   } else {
@@ -35,13 +21,8 @@ const MainSection = ({
       <div className="main-container">
         <NoteList
           activeTag={activeTag}
-          notes={notes}
           tags={tags}
-          onNoteOpen={onNoteOpen}
-          appState={appState}
-          setAppState={setAppState}
           getTag={getTag}
-          onCreateNote={onCreateNote}
         />
       </div>
     );

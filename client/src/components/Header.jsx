@@ -1,37 +1,31 @@
 import React, { useEffect, useRef, useState } from "react";
 import NoteMenuDropdown from "./NoteMenuDropdown";
+import { useSelector, useDispatch } from "react-redux";
+import { displayNoteList } from "../features/uiSlice";
 
 const Header = ({
   title,
-  note,
-  appState,
-  onTitleChange,
-  onDeleteNote,
   tags,
-  onUpdateNoteTag,
-  checkedTags,
-  activeNoteDate,
-  setActiveNoteDate,
-  setCheckedTags,
-  onNoteDateChange,
-  setAppState,
 }) => {
+  const dispatch = useDispatch();
+  const note = useSelector(state => state.notes.activeNote)
+  const mainView = useSelector(state => state.ui.mainView)
   const titleRef = useRef();
 
   // Focus on title input if title is empty
   useEffect(() => {
-    if (appState === 'note' && note.title === "") {
+    if (mainView === 'note') {
       titleRef.current.focus();
     }
-  }, [appState]);
+  }, [mainView]);
 
   const [noteDropdownState, setNoteDropdownState] = useState(false);
 
   const handleClickBackArrow = function () {
-    setAppState("home");
+    dispatch(displayNoteList())
   };
 
-  if (appState === "note") {
+  if (mainView === "note") {
     return (
       <div className="header" style={{ boxShadow: "none", border: "none" }}>
         <Overlay />
@@ -40,8 +34,7 @@ const Header = ({
           <input
             className="note-title"
             type="text"
-            value={note.title}
-            onChange={(e) => onTitleChange(e.target.value)}
+            value={note?.title}
             placeholder="Untitled"
             ref={titleRef}
           />
@@ -64,17 +57,10 @@ const Header = ({
               <span className="material-symbols-outlined">more_horiz</span>
             </button>
             <NoteMenuDropdown
-              activeNoteDate={activeNoteDate}
-              setActiveNoteDate={setActiveNoteDate}
               dropdownState={noteDropdownState}
               setDropdownState={setNoteDropdownState}
               note={note}
-              onDeleteNote={onDeleteNote}
               tags={tags}
-              onUpdateNoteTag={onUpdateNoteTag}
-              checkedTags={checkedTags}
-              setCheckedTags={setCheckedTags}
-              onNoteDateChange={onNoteDateChange}
             />
           </div>
         </div>

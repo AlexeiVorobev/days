@@ -9,8 +9,7 @@ import * as utils from "../utils";
 import { formatISO } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import {createNote} from '../features/notes/noteSlice'
-import { getNotes, deleteNote, reset } from "../features/notes/noteSlice";
+import { getNotes, reset } from "../features/notes/noteSlice";
 import Spinner from '../components/Spinner'
 
 const DEFAULT_NOTES = [
@@ -45,7 +44,7 @@ const DEFAULT_NOTES = [
 
 function Dashboard() {
 
-  const {notes, isLoading, isError, message} = useSelector((state) => state.notes)
+  const { isLoading, isError, message} = useSelector((state) => state.notes)
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -67,10 +66,6 @@ function Dashboard() {
     }
     
   }, [user, navigate, isError, message, dispatch])
-  
-  // const [notes, setNotes] = useState(
-  //   localStorage.notes ? JSON.parse(localStorage.notes) : DEFAULT_NOTES
-  // );
 
   const [tags, setTags] = useState(
     localStorage.tags
@@ -80,64 +75,7 @@ function Dashboard() {
           { name: "Notes", id: "1" },
         ]
   );
-
-  const [appState, setAppState] = useState(null);
-  const [activeNote, setActiveNote] = useState(null);
   const [activeTag, setActiveTag] = useState(null);
-  const [checkedTags, setCheckedTags] = useState([]);
-  const [activeNoteDate, setActiveNoteDate] = useState(null);
-
-  const handleNoteOpen = function (noteId) {
-    setActiveNote(noteId);
-  };
-
-  const handleDeleteNote = function (id) {
-    const notesUpdated = notes.filter((note) => note.id !== id);
-    dispatch(deleteNote(id))
-    setAppState("noteList");
-  };
-
-  const handleCreateNote = function () {
-    const newNote = {
-      title: "",
-      text: "",
-      date: formatISO(new Date(), { representation: "date" }),
-      tagList: activeTag ? [activeTag] : [],
-    };
-    dispatch(createNote(newNote))
-    // setAppState("note");
-    // setActiveNote(newNote.id);
-  };
-
-  const handleNoteDateChange = function (noteId, newDate) {
-    if (!newDate) return;
-    const newNotes = notes;
-    newNotes.forEach((note) => {
-      if (note.id === noteId) {
-        note.date = newDate;
-      }
-      return;
-    });
-    newNotes.sort(utils.sortByDate);
-    setNotes(newNotes);
-    localStorage.setItem("notes", JSON.stringify(notes));
-  };
-
-  const handleTitleChange = function (newTitle) {
-    const notesUpdated = notes.map((note) => {
-      if (note.id === activeNote) {
-        note.title = newTitle;
-        return note;
-      } else {
-        return note;
-      }
-    });
-    setNotes(notesUpdated);
-  };
-
-  function getNote(id) {
-    return notes.find((note) => note.id === id);
-  }
 
   const getTitle = function () {
     if (activeTag) return getTag(activeTag).name;
@@ -151,10 +89,6 @@ function Dashboard() {
   useEffect(() => {
     localStorage.setItem("tags", JSON.stringify(tags));
   }, [tags]);
-
-  useEffect(() => {
-    localStorage.setItem("notes", JSON.stringify(notes));
-  }, [notes]);
 
   const [tagModalActive, setTagModalActive] = useState(false);
 
@@ -178,28 +112,6 @@ function Dashboard() {
     setNotes(notesUpdated);
   };
 
-  const saveNote = function (id, content) {
-    const noteIndex = notes.findIndex((note) => note.id === id);
-    const notesUpdated = notes;
-    notesUpdated[noteIndex].text = content;
-    setNotes(notesUpdated);
-    localStorage.setItem("notes", JSON.stringify(notes));
-  };
-
-  const handleUpdateNoteTag = function (noteId, tagId) {
-    const noteIndex = notes.findIndex((note) => note.id === noteId);
-    const notesUpdated = notes;
-    if (notesUpdated[noteIndex].tagList.includes(tagId)) {
-      notesUpdated[noteIndex].tagList = notesUpdated[noteIndex].tagList.filter(
-        (id) => id !== tagId
-      );
-    } else {
-      notesUpdated[noteIndex].tagList.push(tagId);
-    }
-    setNotes(notesUpdated);
-    localStorage.setItem("notes", JSON.stringify(notes));
-  };
-
   const handleUpdateTag = function (tagUpdated) {
     const tagsUpdated = tags.map((tag) => {
       if (tag.id === tagUpdated.id) {
@@ -218,26 +130,12 @@ function Dashboard() {
       <Header
         tags={tags}
         title={getTitle()}
-        note={getNote(activeNote)}
-        appState={appState}
-        onTitleChange={handleTitleChange}
-        onDeleteNote={handleDeleteNote}
-        onUpdateNoteTag={handleUpdateNoteTag}
-        checkedTags={checkedTags}
-        setCheckedTags={setCheckedTags}
-        activeNoteDate={activeNoteDate}
-        setActiveNoteDate={setActiveNoteDate}
-        onNoteDateChange={handleNoteDateChange}
-        setAppState={setAppState}
       />
       <Sidebar
         tags={tags}
         setTagModalActive={setTagModalActive}
         activeTag={activeTag}
         setActiveTag={setActiveTag}
-        setActiveNote={setActiveNote}
-        appState={appState}
-        setAppState={setAppState}
       />
       <div className="main-section">
         <Spinner />
@@ -251,44 +149,18 @@ function Dashboard() {
       <Header
         tags={tags}
         title={getTitle()}
-        note={getNote(activeNote)}
-        appState={appState}
-        onTitleChange={handleTitleChange}
-        onDeleteNote={handleDeleteNote}
-        onUpdateNoteTag={handleUpdateNoteTag}
-        checkedTags={checkedTags}
-        setCheckedTags={setCheckedTags}
-        activeNoteDate={activeNoteDate}
-        setActiveNoteDate={setActiveNoteDate}
-        onNoteDateChange={handleNoteDateChange}
-        setAppState={setAppState}
       />
       <Sidebar
         tags={tags}
         setTagModalActive={setTagModalActive}
         activeTag={activeTag}
         setActiveTag={setActiveTag}
-        setActiveNote={setActiveNote}
-        appState={appState}
-        setAppState={setAppState}
-        onCreateNote={handleCreateNote}
       />
       <div className="main-section">
         <MainSection
-          note={getNote(activeNote)}
           activeTag={activeTag}
-          notes={notes}
           tags={tags}
-          onNoteOpen={handleNoteOpen}
-          appState={appState}
-          setAppState={setAppState}
-          saveNote={saveNote}
           getTag={getTag}
-          checkedTags={checkedTags}
-          setCheckedTags={setCheckedTags}
-          activeNoteDate={activeNoteDate}
-          setActiveNoteDate={setActiveNoteDate}
-          onCreateNote={handleCreateNote}
         />
       </div>
       <TagModal

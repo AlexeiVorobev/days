@@ -1,7 +1,9 @@
-import React, { useCallback, useState, useEffect, saveNote, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import format from "date-fns/format";
+import { useDispatch, useSelector } from 'react-redux';
+import { setActiveNote, updateNote } from "../features/notes/noteSlice";
 
 const toolbarOptions = [
   [{ 'header': 1 }, { 'header': 2 }],
@@ -10,40 +12,43 @@ const toolbarOptions = [
   [{ 'color': [] }, 'link', 'clean'],
 ];
 
-const NotePage = ({ note, saveNote, getTag, checkedTags, setCheckedTags, activeNoteDate, setActiveNoteDate }) => {
-  const [content, setContent] = useState("");
+const NotePage = ({ getTag }) => {
+  const dispatch = useDispatch()
+  const note = useSelector(state => state.notes.activeNote)
 
-  useEffect(() => {
-    setCheckedTags(note.tagList);
-  },[]);
+  const [content, setContent] = useState(note.text);
+  const [date, setDate] = useState(note.date)
+  const [title, setTitle] = useState(note.title)
 
-  useEffect(() => {
-    setActiveNoteDate(note.date);
-  }, [])
-
-  useEffect(() => {
-    setContent(note.text);
-  }, []);
-
-  const handleChange = function (content) {
+  const onContentChange = function (content) {
     setContent(content);
-    saveNote(note.id, content);
   };
+
+  const onSave = () => {
+    const updatedNote = {
+      _id: note._id,
+      text: content,
+      date: date,
+      title: title
+    }
+    dispatch(setActiveNote(updatedNote))
+    dispatch(updateNote(updatedNote))
+  }
 
   return (
     <div className="main-container">
-      <ReactQuill  modules={{ toolbar: toolbarOptions }} theme="snow" value={content} onChange={handleChange} />
+      <ReactQuill  modules={{ toolbar: toolbarOptions }} theme="snow" value={content} onChange={onContentChange} />
       <div className="note-control-panel left-right">
         <div className="left">
-          <div className="card-date">{activeNoteDate ? format(new Date(activeNoteDate), "dd MMMM y") : '---'}</div>
+          <div className="card-date">{note.date ? format(new Date(note.date), "dd MMMM y") : '---'}</div>
           {
-          checkedTags.map((tagId) => (
+          note.tagList?.map((tagId) => (
             <div key={tagId} className="tag-box">
               {getTag(tagId).name}
             </div>
           ))}
         </div>
-        <div className="right"><button className="btn-regular">Save</button></div>
+        <div className="right"><button className="btn-regular" onClick={onSave}>Save</button></div>
       </div>
     </div>
   );
