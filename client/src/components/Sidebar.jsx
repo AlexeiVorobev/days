@@ -3,7 +3,7 @@ import logoUrl from "../assets/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
-import { setActiveNote } from "../features/notes/noteSlice";
+import { setActiveNote, updateNote } from "../features/notes/noteSlice";
 import { displayNoteList } from "../features/uiSlice";
 
 const Sidebar = ({
@@ -15,10 +15,11 @@ const Sidebar = ({
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+  const activeNote = useSelector(state => state.notes.activeNote)
 
   const handleMenuTagClick = function (id) {
     setActiveTag(id);
-    dispatch(setActiveNote(null));
+    dispatch(updateNote(activeNote))
     dispatch(displayNoteList())
   };
 
@@ -30,7 +31,8 @@ const Sidebar = ({
 
   const handleMenuHomeClick = function () {
     setActiveTag(null);
-    dispatch(setActiveNote(null));
+    if (activeNote) {dispatch(updateNote(activeNote))}
+    dispatch(setActiveNote(null))
     dispatch(displayNoteList())
   };
 

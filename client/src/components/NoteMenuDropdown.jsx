@@ -1,26 +1,28 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteNote } from "../features/notes/noteSlice";
-import { displayNoteList } from "../features/uiSlice";
+import { updateNoteDropdownState, displayNoteList } from "../features/uiSlice";
+import { setActiveNote } from "../features/notes/noteSlice";
 
 export default function NoteMenuDropdown({
-  dropdownState,
   tags,
-  setDropdownState,
+  note
 }) {
   const dispatch = useDispatch()
   const noteId = useSelector(state => state.notes?.activeNote?._id)
-  const modalRef = useRef();
+  const dropdownRef = useRef();
+  const dropdownState = useSelector(state => state.ui.noteDropdownState)
 
   const onDeleteNote = function (id) {
     dispatch(deleteNote(id))
     dispatch(displayNoteList())
+    dispatch(updateNoteDropdownState(false))
   };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
-        setDropdownState(false);
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        dispatch(updateNoteDropdownState(false));
       }
     };
 
@@ -29,11 +31,13 @@ export default function NoteMenuDropdown({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [modalRef]);
+  }, [dropdownRef]);
+
+  if (!dropdownState) return null;
 
   if (dropdownState === "main") {
     return (
-      <div className="dropdown-content" ref={modalRef}>
+      <div className="dropdown-content" ref={dropdownRef}>
         <button
           className="dropdown-btn"
           type="button"
@@ -44,14 +48,14 @@ export default function NoteMenuDropdown({
         <button
           className="dropdown-btn"
           type="button"
-          onClick={() => setDropdownState("tags")}
+          onClick={() => dispatch(updateNoteDropdownState("tags"))}
         >
           Edit tags
         </button>
         <button
           className="dropdown-btn"
           type="button"
-          onClick={() => setDropdownState("date")}
+          onClick={() => dispatch(updateNoteDropdownState("date"))}
         >
           Set date
         </button>
@@ -59,7 +63,7 @@ export default function NoteMenuDropdown({
     );
   } else if (dropdownState === "tags") {
     return (
-      <div className="dropdown-content" ref={modalRef}>
+      <div className="dropdown-content" ref={dropdownRef}>
         {tags.map((tag) => (
           <label key={tag.id}>
             <input
@@ -73,13 +77,19 @@ export default function NoteMenuDropdown({
     );
   } else if (dropdownState === "date") {
     return (
-      <div className="dropdown-content" ref={modalRef}>
+      <div className="dropdown-content" ref={dropdownRef}>
         <div className="dropdown-btn">
           <input
             type="date"
             name=""
             id=""
-            defaultValue={note.date}
+            value={note?.date}
+            onChange={(e) => {
+              dispatch(setActiveNote({
+                ...note,
+                date: e.target.value
+              }));
+            }}
           />
         </div>
       </div>

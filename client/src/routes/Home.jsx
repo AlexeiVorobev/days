@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import MainSection from "../components/MainSection";
 import Sidebar from "../components/Sidebar";
-import "../App.css";
-import Header from "../components/Header";
+import "../index.css";
 import uuid from "react-uuid";
 import TagModal from "../components/TagModal";
 import * as utils from "../utils";
@@ -11,16 +9,10 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getNotes, reset } from "../features/notes/noteSlice";
 import Spinner from '../components/Spinner'
+import NotePage from "../components/NotePage";
+import NoteList from "../components/NoteList";
 
 const DEFAULT_NOTES = [
-  {
-    id: uuid(),
-    title: "About foxes and dogs",
-    text: `<h1>Foxes and dogs</h1><p>Quick brown fox jumps over the lazy dog.</p><h2>Manual</h2><ol>
-    <li>Find a fox</li><li>Find a dog</li><li>Jump fox over the dog</li></ol>`,
-    date: formatISO(new Date(), { representation: "date" }),
-    tagList: ["1"],
-  },
   {
     id: uuid(),
     title: "About Lorem Ipsum",
@@ -49,6 +41,7 @@ function Dashboard() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const {user} = useSelector((state) => state.auth)
+  const mainView = useSelector(state => state.ui.mainView)
 
   useEffect(() => {
     if (isError) {
@@ -109,7 +102,6 @@ function Dashboard() {
       note.tagList = note.tagList.filter((id) => id !== idToDelete);
       return note;
     });
-    setNotes(notesUpdated);
   };
 
   const handleUpdateTag = function (tagUpdated) {
@@ -124,45 +116,22 @@ function Dashboard() {
     setTags(tagsUpdated);
   };
 
-  if (isLoading) {
-    return (
-      <div className="App">
-      <Header
-        tags={tags}
-        title={getTitle()}
-      />
-      <Sidebar
-        tags={tags}
-        setTagModalActive={setTagModalActive}
-        activeTag={activeTag}
-        setActiveTag={setActiveTag}
-      />
-      <div className="main-section">
-        <Spinner />
-      </div>
-    </div>
-    )
-  }
-
   return (
-    <div className="App">
-      <Header
-        tags={tags}
-        title={getTitle()}
-      />
-      <Sidebar
-        tags={tags}
-        setTagModalActive={setTagModalActive}
-        activeTag={activeTag}
-        setActiveTag={setActiveTag}
-      />
-      <div className="main-section">
-        <MainSection
-          activeTag={activeTag}
+    <div>
+      <Overlay />
+      <ToggleBtn />
+      <main>
+        <Sidebar
           tags={tags}
-          getTag={getTag}
+          setTagModalActive={setTagModalActive}
+          activeTag={activeTag}
+          setActiveTag={setActiveTag}
         />
-      </div>
+        <div className="main-container">
+          {isLoading && <Spinner />}
+          {mainView === "note" ? <NotePage /> : <NoteList title={getTitle()} />}
+        </div>
+      </main>
       <TagModal
         onDeleteTag={handleDeleteTag}
         tags={tags}
@@ -172,6 +141,30 @@ function Dashboard() {
         onUpdateTag={handleUpdateTag}
       />
     </div>
+  );
+}
+
+const toggleMenu = function () {
+  const sidebar = document.querySelector(".sidebar");
+  const overlay = document.querySelector(".sidebar-overlay");
+  if (!overlay.classList.contains("active")) {
+    sidebar.classList.add("active");
+    overlay.classList.add("active");
+  } else {
+    sidebar.classList.remove("active");
+    overlay.classList.remove("active");
+  }
+};
+
+function Overlay() {
+  return <div className="sidebar-overlay" onClick={toggleMenu}></div>;
+}
+
+function ToggleBtn() {
+  return (
+    <button className="toggle-sidebar-btn" onClick={toggleMenu}>
+      <span className="material-symbols-outlined black header-btn">menu</span>
+    </button>
   );
 }
 

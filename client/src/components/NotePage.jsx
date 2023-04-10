@@ -2,55 +2,116 @@ import React, { useState, useEffect, useRef } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import format from "date-fns/format";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import { setActiveNote, updateNote } from "../features/notes/noteSlice";
+import { updateNoteDropdownState, displayNoteList } from "../features/uiSlice";
+import NoteMenuDropdown from "./NoteMenuDropdown";
 
 const toolbarOptions = [
-  [{ 'header': 1 }, { 'header': 2 }],
-  ['bold', 'italic', 'underline', 'strike' ],
-  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-  [{ 'color': [] }, 'link', 'clean'],
+  [{ header: 1 }, { header: 2 }],
+  ["bold", "italic", "underline", "strike"],
+  [{ list: "ordered" }, { list: "bullet" }],
+  [{ color: [] }, "link", "clean"],
 ];
 
-const NotePage = ({ getTag }) => {
-  const dispatch = useDispatch()
-  const note = useSelector(state => state.notes.activeNote)
+const NotePage = ({ getTag, tags }) => {
+  const titleRef = useRef()
+  const dispatch = useDispatch();
+  const note = useSelector((state) => state.notes.activeNote);
+  const dropdownActive = useSelector(state => state.ui.noteDropdownState)
 
-  const [content, setContent] = useState(note.text);
-  const [date, setDate] = useState(note.date)
-  const [title, setTitle] = useState(note.title)
-
-  const onContentChange = function (content) {
-    setContent(content);
+  const handleClickBack = function () {
+    onSave()
+    dispatch(displayNoteList());
   };
 
   const onSave = () => {
-    const updatedNote = {
-      _id: note._id,
-      text: content,
-      date: date,
-      title: title
+    dispatch(updateNote(note));
+  };
+
+  useEffect(() => {
+    if (!note.title) {
+      titleRef.current.focus();
     }
-    dispatch(setActiveNote(updatedNote))
-    dispatch(updateNote(updatedNote))
+  }, [])
+
+  const toggleDropdown = () => {
+    if (dropdownActive) {
+      dispatch(updateNoteDropdownState(false))
+    } else {
+      dispatch(updateNoteDropdownState("main"))
+    }
   }
 
   return (
-    <div className="main-container">
-      <ReactQuill  modules={{ toolbar: toolbarOptions }} theme="snow" value={content} onChange={onContentChange} />
-      <div className="note-control-panel left-right">
+    <>
+      <div className="header" style={{ boxShadow: "none", border: "none" }}>
         <div className="left">
-          <div className="card-date">{note.date ? format(new Date(note.date), "dd MMMM y") : '---'}</div>
-          {
-          note.tagList?.map((tagId) => (
-            <div key={tagId} className="tag-box">
-              {getTag(tagId).name}
-            </div>
-          ))}
+          <input
+            className="note-title"
+            type="text"
+            value={note?.title}
+            placeholder="Untitled"
+            ref={titleRef}
+            onChange={(e) => {
+              dispatch(setActiveNote({
+                ...note,
+                title: e.target.value
+              }));
+            }}
+          />
         </div>
-        <div className="right"><button className="btn-regular" onClick={onSave}>Save</button></div>
+        <div className="right">
+          <button
+            className="icon-btn black header-btn"
+            onClick={() => handleClickBack()}
+          >
+            <span className="material-symbols-outlined">arrow_back</span>
+          </button>
+          <div className="dropdown">
+            <button
+              className="icon-btn header-btn"
+              id="noteDropdownBtn"
+              onClick={toggleDropdown}
+            >
+              <span className="material-symbols-outlined">more_horiz</span>
+            </button>
+            <NoteMenuDropdown note={note} tags={tags} />
+          </div>
+        </div>
       </div>
-    </div>
+
+      <div>
+        <ReactQuill
+          modules={{ toolbar: toolbarOptions }}
+          theme="snow"
+          value={note.text}
+          onChange={(value) => {
+            dispatch(setActiveNote({
+              ...note,
+              text: value
+            }));
+          }}
+        />
+        <div className="note-control-panel left-right">
+          <div className="left">
+            <div className="card-date">
+              {note?.date ? format(new Date(note.date), "dd MMMM y") : "---"}
+            </div>
+            {note?.tagList?.map((tagId) => (
+              <div key={tagId} className="tag-box">
+                {getTag(tagId).name}
+              </div>
+            ))}
+          </div>
+          <div className="right">
+            <button className="btn-regular" onClick={onSave}>
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 

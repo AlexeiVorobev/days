@@ -28,11 +28,11 @@ input {
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+  display: none;
+  width: 4px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  margin-top: 40px;
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.1);
 }
@@ -49,8 +49,13 @@ input {
 }
 
 .main-container {
+  position: relative;
+  left: 240px;
+  width: calc(100% - 240px);
+  margin-top: 70px;
   height: 100%;
   justify-content: center;
+  /* overflow-y: scroll; */
 }
 
 /* SPINNER */
@@ -138,11 +143,9 @@ input {
 
 /* ### */
 
-.App {
+main {
   height: 100vh;
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  grid-template-rows: 70px 1fr;
+  display: flex;
 }
 
 .note-container {
@@ -153,15 +156,10 @@ input {
   max-width: 816px;
 }
 
-.main-section {
-  margin: 0;
-  overflow-y: auto;
-}
-
 .month-header {
   font-size: 1.5rem;
   margin-bottom: 10px;
-  margin-top: 36px;
+  margin-top: 30px;
   font-weight: bold;
 }
 
@@ -261,7 +259,7 @@ a, .link {
 
 .note-card p {
   font-size: 1rem;
-  color: var(--font-color-light);
+  color: var(--font-color-primary);
 }
 
 body {
@@ -278,12 +276,12 @@ button {
 }
 
 .sidebar {
+  position: fixed;
   z-index: 3;
   background-color: var(--primary-color);
   color: white;
   height: 100%;
-  grid-column: 1 / 2;
-  grid-row: 1 / 3;
+  width: 240px;
 }
 
 .sidebar span,
@@ -292,8 +290,7 @@ button {
 }
 
 .main {
-  grid-column: 2 / 3;
-  grid-row: 2;
+  display: flex;
   background-color: white;
 }
 
@@ -311,11 +308,15 @@ button {
 }
 
 .header {
+  z-index: 2;
+  position: fixed;
+  top: 0px;
+  height: 70px;
+  width: calc(100% - 225px);
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   background-color: white;
   padding: 0 24px;
   color: var(--font-color-primary);
-  grid-column: 2 / 3;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -325,6 +326,23 @@ button {
 input.note-title {
   font-size: 1.5rem;
   font-weight: bold;
+}
+
+.ql-toolbar.ql-snow {
+  display: flex;
+  padding: 8px 20px !important;
+  justify-content: left;
+  position: fixed;
+  top: 70px;
+  border: none !important;
+  box-shadow: var(--shadow);
+  z-index: 1;
+  background-color: white;
+  width: 100%;
+}
+
+.ql-toolbar.ql-snow .ql-formats {
+  display: flex;
 }
 
 #noteDropdownBtn {
@@ -431,7 +449,6 @@ button.icon-btn.black span {
   top: 0;
   width: 100%; /* Full width */
   height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
   background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
@@ -537,9 +554,10 @@ p {
 }
 
 .ql-container.ql-snow {
-  border: none;
+  border: none !important;
   max-width: 816px;
   margin: 20px auto;
+  margin-top: 70px;
   padding: 0 20px;
   padding-bottom: 60px;
 }
@@ -559,30 +577,6 @@ p {
   top: 70px;
   z-index: 1;
 }
-
-
-
-.ql-toolbar.ql-snow {
-  display: flex;
-  padding: 8px 20px;
-  justify-content: left;
-  position: sticky;
-  top: 0;
-  border: none;
-  box-shadow: var(--shadow);
-  z-index: 1;
-  background-color: white;
-  width: 100%;
-}
-
-.ql-toolbar.ql-snow .ql-formats {
-  display: flex;
-}
-
-/* .left-right {
-  display: flex;
-  justify-content: space-between !important;
-} */
 
 .note-control-panel {
   display: flex;
@@ -645,9 +639,8 @@ p {
   display: none;
 }
 
-.toggle-menu-btn {
+.toggle-sidebar-btn {
   display: none;
-  margin: var(--margin-m);
 }
 
 h1,
@@ -664,6 +657,11 @@ strong {
 
 
 @media only screen and (max-width: 700px) {
+
+  .main-container {
+    left: 0px;
+    width: 100%;
+  }
 
   .form-container {
     border: none;
@@ -691,7 +689,7 @@ strong {
     width: 100%;
     box-shadow: none;
     border: none;
-    padding: 16px;
+    padding: 16px !important;
     padding-bottom: 60px;
     position: relative;
     top: 42px;
@@ -706,8 +704,21 @@ strong {
     align-items: start;
   }
 
-  .toggle-menu-btn {
+  .toggle-sidebar-btn {
+    z-index: 3;
     display: flex;
+    position: fixed;
+    margin: var(--margin-m);
+    left: 0;
+    top: 10px;
+  }
+
+  .header {
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    padding-left: 50px;
+    box-shadow: var(--shadow);
   }
 
   .sidebar.active {
@@ -718,17 +729,7 @@ strong {
     display: block;
   }
 
-  .App {
-    grid-template-columns: 1fr;
-    grid-template-rows: 70px 1fr;
-  }
-
-  .header {
-    grid-column: 1;
-    padding: 0;
-    box-shadow: var(--shadow);
-    /* border-bottom: var(--border-mobile); */
-  }
+ 
 
   .note-card {
     box-shadow: none;
