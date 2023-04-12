@@ -11,6 +11,7 @@ import { getNotes, reset } from "../features/notes/noteSlice";
 import Spinner from '../components/Spinner'
 import NotePage from "../components/NotePage";
 import NoteList from "../components/NoteList";
+import { getTags } from "../features/tags/tagSlice";
 
 const DEFAULT_NOTES = [
   {
@@ -53,35 +54,13 @@ function Dashboard() {
     }
 
     dispatch(getNotes())
+    dispatch(getTags())
 
     return () => {
       dispatch(reset())
     }
     
   }, [user, navigate, isError, message, dispatch])
-
-  const [tags, setTags] = useState(
-    localStorage.tags
-      ? JSON.parse(localStorage.tags)
-      : [
-          { name: "Journal", id: "0" },
-          { name: "Notes", id: "1" },
-        ]
-  );
-  const [activeTag, setActiveTag] = useState(null);
-
-  const getTitle = function () {
-    if (activeTag) return getTag(activeTag).name;
-    return "Timeline";
-  };
-
-  const getTag = function (id) {
-    return tags.find((tag) => tag.id === id);
-  };
-
-  useEffect(() => {
-    localStorage.setItem("tags", JSON.stringify(tags));
-  }, [tags]);
 
   const [tagModalActive, setTagModalActive] = useState(false);
 
@@ -121,20 +100,14 @@ function Dashboard() {
       <Overlay />
       <ToggleBtn />
       <main>
-        <Sidebar
-          tags={tags}
-          setTagModalActive={setTagModalActive}
-          activeTag={activeTag}
-          setActiveTag={setActiveTag}
-        />
+        <Sidebar />
         <div className="main-container">
           {isLoading && <Spinner />}
-          {mainView === "note" ? <NotePage /> : <NoteList title={getTitle()} />}
+          {mainView === "note" ? <NotePage /> : <NoteList title="NOTITLE" />}
         </div>
       </main>
       <TagModal
         onDeleteTag={handleDeleteTag}
-        tags={tags}
         isActive={tagModalActive}
         onClose={() => setTagModalActive(false)}
         onAddTag={handleAddTag}

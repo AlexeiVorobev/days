@@ -77,6 +77,36 @@ const getMe = asyncHandler(async (req, res) => {
   res.status(200).json(req.user)
 });
 
+// @desc Get user's tags
+// @route GET /api/users/tags
+// @access Private
+const getUserTags = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user.id).select('tags');
+
+  if (user) {
+    res.status(200).json(user.tags);
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
+
+// @desc Update user's tags
+// @route PUT /api/users/tags
+// @access Private
+const updateUserTags = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user.id);
+
+  if (user) {
+    user.tags = req.body.tags;
+    const updatedUser = await user.save();
+    res.status(200).json(updatedUser.tags);
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
+
 const generateToken = (id) => {
     return jwt.sign( {id}, process.env.JWT_SECRET, {
         expiresIn: '30d'
@@ -87,4 +117,6 @@ module.exports = {
   registerUser,
   loginUser,
   getMe,
+  updateUserTags,
+  getUserTags
 };

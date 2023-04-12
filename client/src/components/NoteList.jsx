@@ -9,12 +9,11 @@ import { formatISO } from "date-fns";
 const MAX_PREVIEW_TEXT_LENGTH = 250;
 
 const NoteList = ({
-  activeTag,
-  getTag,
   title
 }) => {
   const dispatch = useDispatch()
   const notes = useSelector(state => state.notes.notes)
+  const activeTag = useSelector(state => state.tags.activeTag)
 
   function removeTags(str) {
     if (!str || str === "") return false;

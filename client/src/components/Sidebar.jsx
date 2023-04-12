@@ -7,13 +7,12 @@ import { setActiveNote, updateNote } from "../features/notes/noteSlice";
 import { displayNoteList } from "../features/uiSlice";
 
 const Sidebar = ({
-  tags,
   setTagModalActive,
-  activeTag,
-  setActiveTag,
 }) => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const tags = useSelector(state => state.tags.tags)
+  const activeTag = useSelector(state => state.tags.activeTag)
+  const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
   const activeNote = useSelector(state => state.notes.activeNote)
 
