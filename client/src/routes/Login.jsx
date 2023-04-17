@@ -61,7 +61,7 @@ export default function Login() {
     <div className="form-container">
       <section className="heading">
         <h1>Days</h1>
-        <p>“Write some shit down.”</p>
+        <p>Write some stuff</p>
       </section>
 
       <form onSubmit={onSubmit}>

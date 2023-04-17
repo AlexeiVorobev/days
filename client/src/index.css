@@ -136,6 +136,9 @@ input {
   margin-bottom: 8px;
   font-size: 0.85rem;
 }
+.subscript a {
+  color: var(--sassy-color) !important;
+}
 
 .form-container a {
   color: var(--sassy-color);

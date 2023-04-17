@@ -58,7 +58,7 @@ export default function Register() {
     <div className="form-container">
       <section className="heading">
         <h1>Days</h1>
-        <p>“Write some shit down.”</p>
+        <p>Sign-up now and start writing</p>
       </section>
 
       <form onSubmit={onSubmit}>
