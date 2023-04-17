@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import noteService from "./noteService";
+import { useSelector } from "react-redux";
 
 const initialState = {
     notes: [],

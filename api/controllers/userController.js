@@ -98,7 +98,7 @@ const updateUserTags = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user.id);
 
   if (user) {
-    user.tags = req.body.tags;
+    user.tags = req.body;
     const updatedUser = await user.save();
     res.status(200).json(updatedUser.tags);
   } else {

@@ -1,6 +1,6 @@
 import React from "react";
 import format from "date-fns/format";
-import {sortByDate} from "../utils"
+import { sortByDate } from "../utils";
 import { useDispatch, useSelector } from "react-redux";
 import { setActiveNote, createNote } from "../features/notes/noteSlice";
 import { displayNotePage } from "../features/uiSlice";
@@ -8,12 +8,11 @@ import { formatISO } from "date-fns";
 
 const MAX_PREVIEW_TEXT_LENGTH = 250;
 
-const NoteList = ({
-  title
-}) => {
-  const dispatch = useDispatch()
-  const notes = useSelector(state => state.notes.notes)
-  const activeTag = useSelector(state => state.tags.activeTag)
+const NoteList = ({}) => {
+  const dispatch = useDispatch();
+  const notes = useSelector((state) => state.notes.notes);
+  const activeTag = useSelector((state) => state.tags.activeTag);
+  const tags = useSelector((state) => state.tags.tags);
 
   function removeTags(str) {
     if (!str || str === "") return false;
@@ -27,11 +26,11 @@ const NoteList = ({
       title: "",
       text: "",
       date: formatISO(new Date(), { representation: "date" }),
-      tagList: activeTag ? [activeTag] : [],
+      tagList: activeTag ? [activeTag._id] : [],
     };
-    await dispatch(createNote(newNote))
-    dispatch(displayNotePage())
-  }
+    await dispatch(createNote(newNote));
+    dispatch(displayNotePage());
+  };
 
   const getNotesByTag = function (notes, tag) {
     const notesFiltered = notes.filter((note) => note.tagList.includes(tag));
@@ -39,20 +38,36 @@ const NoteList = ({
   };
 
   const handleNoteClick = function (noteId) {
-    const noteToOpen = notes.find(note => note._id === noteId)
-    dispatch(setActiveNote(noteToOpen))
-    dispatch(displayNotePage())
+    const noteToOpen = notes.find((note) => note._id === noteId);
+    dispatch(setActiveNote(noteToOpen));
+    dispatch(displayNotePage());
   };
 
-  const taggedNotes = activeTag ? getNotesByTag(notes, activeTag) : notes
+  const taggedNotes = activeTag ? getNotesByTag(notes, activeTag._id) : notes;
   const notesToDisplay = [...taggedNotes].sort(sortByDate);
   if (!notesToDisplay || notesToDisplay.length === 0)
     return (
-    <div className="main-empty">No entries
-    <button id="headerNewNote" onClick={onCreateNote}>
-        <span className="material-symbols-outlined black" style={{fontSize: '1.5rem'}}>add</span>
-      </button>
-    </div>
+      <div>
+        <div className="header">
+          <div className="left">
+            <div className="header-title">
+              {activeTag ? activeTag.name : "Timeline"}
+            </div>
+          </div>
+          <div className="right"></div>
+        </div>
+        <div className="main-empty">
+          No entries
+          <button id="headerNewNote" onClick={onCreateNote}>
+            <span
+              className="material-symbols-outlined black"
+              style={{ fontSize: "1.5rem" }}
+            >
+              add
+            </span>
+          </button>
+        </div>
+      </div>
     );
 
   let currentDate = notesToDisplay[0].date
@@ -60,19 +75,24 @@ const NoteList = ({
     : new Date();
 
   return (
-
     <>
       <div className="header">
-      <div className="left">
-        <div className="header-title">{title}</div>
-      </div>
-      <div className="right">
-      </div>
+        <div className="left">
+          <div className="header-title">
+            {activeTag ? activeTag.name : "Timeline"}
+          </div>
         </div>
-      
+        <div className="right"></div>
+      </div>
+
       <div className="note-container">
         <button id="headerNewNote" onClick={onCreateNote}>
-          <span className="material-symbols-outlined black" style={{fontSize: '1.5rem'}}>add</span>
+          <span
+            className="material-symbols-outlined black"
+            style={{ fontSize: "1.5rem" }}
+          >
+            add
+          </span>
         </button>
         <h1 className="month-header">
           {format(currentDate, "MMMM")} {format(currentDate, "y")}
@@ -102,16 +122,24 @@ const NoteList = ({
               ) : (
                 ""
               )}
-              <div className="note-card" onClick={() => handleNoteClick(note._id)}>
+              <div
+                className="note-card"
+                onClick={() => handleNoteClick(note._id)}
+              >
                 <h1>{note.title}</h1>
                 <p>{text}</p>
                 <div className="card-bottom-panel">
                   <div className="card-date">{format(date, "dd MMMM y")}</div>
-                  {note.tagList.map((tagId) => (
-                    <div key={tagId} className="tag-box">
-                      {getTag(tagId).name}
-                    </div>
-                  ))}
+                  {note?.tagList?.map((tagId) => {
+                    const tag = tags.find((tag) => tag._id === tagId)?.name;
+                    if (tag) {
+                      return (
+                        <div key={tagId} className="tag-box">
+                          {tags.find((tag) => tag._id === tagId)?.name}
+                        </div>
+                      );
+                    }
+                  })}
                 </div>
               </div>
             </div>

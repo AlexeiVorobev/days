@@ -64,37 +64,6 @@ function Dashboard() {
 
   const [tagModalActive, setTagModalActive] = useState(false);
 
-  const handleAddTag = (newTag) => {
-    if (!newTag.name) return;
-    newTag.id = uuid();
-    const tagsUpdated = [...tags, newTag].sort(utils.sortTags);
-    setTags(tagsUpdated);
-  };
-
-  const handleDeleteTag = function (idToDelete) {
-    if (idToDelete === activeTag) {
-      setActiveTag(null);
-    }
-    setAppState("noteList");
-    setTags(tags.filter((tag) => tag.id !== idToDelete));
-    const notesUpdated = notes.map((note) => {
-      note.tagList = note.tagList.filter((id) => id !== idToDelete);
-      return note;
-    });
-  };
-
-  const handleUpdateTag = function (tagUpdated) {
-    const tagsUpdated = tags.map((tag) => {
-      if (tag.id === tagUpdated.id) {
-        return tagUpdated;
-      } else {
-        return tag;
-      }
-    });
-    tagsUpdated.sort(utils.sortTags);
-    setTags(tagsUpdated);
-  };
-
   return (
     <div>
       <Overlay />
@@ -103,16 +72,10 @@ function Dashboard() {
         <Sidebar />
         <div className="main-container">
           {isLoading && <Spinner />}
-          {mainView === "note" ? <NotePage /> : <NoteList title="NOTITLE" />}
+          {mainView === "note" ? <NotePage /> : <NoteList />}
         </div>
       </main>
-      <TagModal
-        onDeleteTag={handleDeleteTag}
-        isActive={tagModalActive}
-        onClose={() => setTagModalActive(false)}
-        onAddTag={handleAddTag}
-        onUpdateTag={handleUpdateTag}
-      />
+      <TagModal />
     </div>
   );
 }

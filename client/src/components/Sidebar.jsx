@@ -4,11 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
 import { setActiveNote, updateNote } from "../features/notes/noteSlice";
-import { displayNoteList } from "../features/uiSlice";
+import { displayNoteList, setTagModalActive } from "../features/uiSlice";
+import { setActiveTag } from "../features/tags/tagSlice";
 
-const Sidebar = ({
-  setTagModalActive,
-}) => {
+const Sidebar = () => {
   const dispatch = useDispatch();
   const tags = useSelector(state => state.tags.tags)
   const activeTag = useSelector(state => state.tags.activeTag)
@@ -16,8 +15,8 @@ const Sidebar = ({
   const { user } = useSelector((state) => state.auth);
   const activeNote = useSelector(state => state.notes.activeNote)
 
-  const handleMenuTagClick = function (id) {
-    setActiveTag(id);
+  const handleMenuTagClick = function (tag) {
+    dispatch(setActiveTag(tag));
     dispatch(updateNote(activeNote))
     dispatch(displayNoteList())
   };
@@ -29,7 +28,7 @@ const Sidebar = ({
   };
 
   const handleMenuHomeClick = function () {
-    setActiveTag(null);
+    dispatch(setActiveTag(null));
     if (activeNote) {dispatch(updateNote(activeNote))}
     dispatch(setActiveNote(null))
     dispatch(displayNoteList())
@@ -37,9 +36,9 @@ const Sidebar = ({
 
   const menuTags = tags.map((tag) => (
     <div
-      className={"menu-tag menu-item " + (activeTag === tag.id ? "active" : "")}
-      key={tag.id}
-      onClick={() => handleMenuTagClick(tag.id)}
+      className={"menu-tag menu-item " + (activeTag?._id === tag._id ? "active" : "")}
+      key={tag._id}
+      onClick={() => handleMenuTagClick(tag)}
     >
       <span className="material-symbols-outlined">label</span>
       {tag.name}
@@ -123,7 +122,7 @@ const Sidebar = ({
       <div
         className="menu-item"
         id="editTagsBtn"
-        onClick={() => setTagModalActive(true)}
+        onClick={() => dispatch(setTagModalActive(true))}
       >
         <span className="material-symbols-outlined">edit</span>
         Edit tags

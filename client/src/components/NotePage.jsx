@@ -14,14 +14,15 @@ const toolbarOptions = [
   [{ color: [] }, "link", "clean"],
 ];
 
-const NotePage = ({ getTag, tags }) => {
-  const titleRef = useRef()
+const NotePage = () => {
+  const tags = useSelector((state) => state.tags.tags);
+  const titleRef = useRef();
   const dispatch = useDispatch();
   const note = useSelector((state) => state.notes.activeNote);
-  const dropdownActive = useSelector(state => state.ui.noteDropdownState)
+  const dropdownActive = useSelector((state) => state.ui.noteDropdownState);
 
   const handleClickBack = function () {
-    onSave()
+    onSave();
     dispatch(displayNoteList());
   };
 
@@ -33,15 +34,15 @@ const NotePage = ({ getTag, tags }) => {
     if (!note.title) {
       titleRef.current.focus();
     }
-  }, [])
+  }, []);
 
   const toggleDropdown = () => {
     if (dropdownActive) {
-      dispatch(updateNoteDropdownState(false))
+      dispatch(updateNoteDropdownState(false));
     } else {
-      dispatch(updateNoteDropdownState("main"))
+      dispatch(updateNoteDropdownState("main"));
     }
-  }
+  };
 
   return (
     <>
@@ -54,10 +55,12 @@ const NotePage = ({ getTag, tags }) => {
             placeholder="Untitled"
             ref={titleRef}
             onChange={(e) => {
-              dispatch(setActiveNote({
-                ...note,
-                title: e.target.value
-              }));
+              dispatch(
+                setActiveNote({
+                  ...note,
+                  title: e.target.value,
+                })
+              );
             }}
           />
         </div>
@@ -87,10 +90,12 @@ const NotePage = ({ getTag, tags }) => {
           theme="snow"
           value={note.text}
           onChange={(value) => {
-            dispatch(setActiveNote({
-              ...note,
-              text: value
-            }));
+            dispatch(
+              setActiveNote({
+                ...note,
+                text: value,
+              })
+            );
           }}
         />
         <div className="note-control-panel left-right">
@@ -98,11 +103,16 @@ const NotePage = ({ getTag, tags }) => {
             <div className="card-date">
               {note?.date ? format(new Date(note.date), "dd MMMM y") : "---"}
             </div>
-            {note?.tagList?.map((tagId) => (
+            {note?.tagList?.map((tagId) => {
+              const tag = tags.find((tag) => tag._id === tagId)?.name
+              if (tag) {
+                return (
               <div key={tagId} className="tag-box">
-                {getTag(tagId).name}
+                {tags.find((tag) => tag._id === tagId)?.name}
               </div>
-            ))}
+                )
+              } 
+            })}
           </div>
           <div className="right">
             <button className="btn-regular" onClick={onSave}>

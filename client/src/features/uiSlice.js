@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   mainView: "noteList",
   noteDropdownState: false,
+  tagModalActive: false
 };
 
 const uiSlice = createSlice({
@@ -18,12 +19,16 @@ const uiSlice = createSlice({
     updateNoteDropdownState(state, action) {
       state.noteDropdownState = action.payload;
     },
+    setTagModalActive(state, action) {
+      state.tagModalActive = action.payload;
+    }
   },
 });
 
 export const {
   displayNoteList,
   displayNotePage,
-  updateNoteDropdownState
+  updateNoteDropdownState,
+  setTagModalActive
 } = uiSlice.actions;
 export default uiSlice.reducer;

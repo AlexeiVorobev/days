@@ -13,7 +13,7 @@ const userSchema = mongoose.Schema(
     },
     tags: {
       type: Array,
-      default: []
+      default: [{name: "Journal", _id: "0"}, {name: "Notes", _id: "1"}]
     },
   },
   {

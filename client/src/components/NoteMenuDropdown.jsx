@@ -19,6 +19,17 @@ export default function NoteMenuDropdown({
     dispatch(updateNoteDropdownState(false))
   };
 
+  const onTagChange = function (e, tagId) {
+    const newTagList = e.target.checked
+      ? [...note.tagList, tagId]
+      : note.tagList.filter(id => id !== tagId);
+
+    dispatch(setActiveNote({
+      ...note,
+      tagList: newTagList
+    }));
+  };
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -65,10 +76,11 @@ export default function NoteMenuDropdown({
     return (
       <div className="dropdown-content" ref={dropdownRef}>
         {tags.map((tag) => (
-          <label key={tag.id}>
+          <label key={tag._id}>
             <input
               type="checkbox"
-              checked={checkedTags.includes(tag.id)}
+              checked={note.tagList.includes(tag._id)}
+              onChange={(e) => onTagChange(e, tag._id)}
             />
             {tag.name}
           </label>
