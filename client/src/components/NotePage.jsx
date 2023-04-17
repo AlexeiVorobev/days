@@ -56,7 +56,7 @@ const NotePage = () => {
           <input
             className="note-title"
             type="text"
-            value={note?.title}
+            value={note.title ?? ""}
             placeholder="Untitled"
             ref={titleRef}
             onChange={(e) => {
