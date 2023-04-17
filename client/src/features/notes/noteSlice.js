@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import noteService from "./noteService";
-import { useSelector } from "react-redux";
 
 const initialState = {
     notes: [],
@@ -8,7 +7,8 @@ const initialState = {
     isError: false,
     isSuccess: false,
     isLoading: false,
-    message: ''
+    message: '',
+    unsavedChanges: true
 }
 
 export const createNote = createAsyncThunk('notes/create', async(noteData, thunkAPI) => {
@@ -82,6 +82,9 @@ export const noteSlice = createSlice({
         setActiveNote: (state, action) => {
             state.activeNote = action.payload;
         },
+        setUnsavedChanges(state, action) {
+            state.unsavedChanges = action.payload
+          }
     },
     extraReducers: (builder) => {
         builder
@@ -132,6 +135,7 @@ export const noteSlice = createSlice({
             state.isLoading = false
             state.isSuccess = true
             state.isError = false // clear any previous errors
+            state.unsavedChanges = false
             const updatedNote = action.payload
             const index = state.notes.findIndex((n) => n._id === updatedNote._id)
             if (index !== -1) {
@@ -146,6 +150,6 @@ export const noteSlice = createSlice({
     }
 })
 
-export const {reset} = noteSlice.actions
+export const {reset, setUnsavedChanges} = noteSlice.actions
 export default noteSlice.reducer
 export const setActiveNote = createAction('note/setActiveNote');

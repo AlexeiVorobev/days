@@ -3,9 +3,13 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import format from "date-fns/format";
 import { useDispatch, useSelector } from "react-redux";
-import { setActiveNote, updateNote } from "../features/notes/noteSlice";
-import { updateNoteDropdownState, displayNoteList } from "../features/uiSlice";
+import { setActiveNote, updateNote, setUnsavedChanges } from "../features/notes/noteSlice";
+import {
+  updateNoteDropdownState,
+  displayNoteList,
+} from "../features/uiSlice";
 import NoteMenuDropdown from "./NoteMenuDropdown";
+import { toast } from "react-toastify";
 
 const toolbarOptions = [
   [{ header: 1 }, { header: 2 }],
@@ -20,6 +24,7 @@ const NotePage = () => {
   const dispatch = useDispatch();
   const note = useSelector((state) => state.notes.activeNote);
   const dropdownActive = useSelector((state) => state.ui.noteDropdownState);
+  const unsavedChanges = useSelector((state) => state.notes.unsavedChanges);
 
   const handleClickBack = function () {
     onSave();
@@ -90,6 +95,7 @@ const NotePage = () => {
           theme="snow"
           value={note.text}
           onChange={(value) => {
+            dispatch(setUnsavedChanges(true));
             dispatch(
               setActiveNote({
                 ...note,
@@ -104,20 +110,24 @@ const NotePage = () => {
               {note?.date ? format(new Date(note.date), "dd MMMM y") : "---"}
             </div>
             {note?.tagList?.map((tagId) => {
-              const tag = tags.find((tag) => tag._id === tagId)?.name
+              const tag = tags.find((tag) => tag._id === tagId)?.name;
               if (tag) {
                 return (
-              <div key={tagId} className="tag-box">
-                {tags.find((tag) => tag._id === tagId)?.name}
-              </div>
-                )
-              } 
+                  <div key={tagId} className="tag-box">
+                    {tags.find((tag) => tag._id === tagId)?.name}
+                  </div>
+                );
+              }
             })}
           </div>
           <div className="right">
-            <button className="btn-regular" onClick={onSave}>
-              Save
-            </button>
+            {unsavedChanges ? (
+              <button className="btn-special" onClick={onSave}>
+                Save
+              </button>
+            ) : (
+              <div className="btn-regular">Saved</div>
+            )}
           </div>
         </div>
       </div>

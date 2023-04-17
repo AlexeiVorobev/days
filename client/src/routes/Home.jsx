@@ -12,6 +12,7 @@ import Spinner from '../components/Spinner'
 import NotePage from "../components/NotePage";
 import NoteList from "../components/NoteList";
 import { getTags } from "../features/tags/tagSlice";
+import { toast } from "react-toastify";
 
 const DEFAULT_NOTES = [
   {
@@ -37,7 +38,7 @@ const DEFAULT_NOTES = [
 
 function Dashboard() {
 
-  const { isLoading, isError, message} = useSelector((state) => state.notes)
+  const { isLoading, isError, message, unsavedChanges} = useSelector((state) => state.notes)
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -53,6 +54,18 @@ function Dashboard() {
       navigate('/login')
     }
 
+    if(!unsavedChanges) {
+      toast.success('Saved!', {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });    }
+
     dispatch(getNotes())
     dispatch(getTags())
 
@@ -60,7 +73,7 @@ function Dashboard() {
       dispatch(reset())
     }
     
-  }, [user, navigate, isError, message, dispatch])
+  }, [user, navigate, isError, message, dispatch, unsavedChanges])
 
   const [tagModalActive, setTagModalActive] = useState(false);
 
