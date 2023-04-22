@@ -4,14 +4,12 @@ import { displayNoteList, setTagModalActive } from "../features/uiSlice";
 import uuid from "react-uuid";
 import * as utils from "../utils";
 import { setActiveTag, updateTags } from "../features/tags/tagSlice";
-import { updateNote } from "../features/notes/noteSlice";
 
 export default function TagModal() {
   const dispatch = useDispatch();
   const isActive = useSelector((state) => state.ui.tagModalActive);
   const tags = useSelector((state) => state.tags.tags);
   const activeTag = useSelector((state) => state.tags.activeTag);
-  const notes = useSelector(state => state.notes.notes)
 
   const [newTags, setNewTags] = useState(tags)
   const [newTagName, setNewTagName] = useState("")
@@ -27,6 +25,7 @@ export default function TagModal() {
 
   const onSave = () => {
     dispatch(updateTags(newTags))
+    dispatch(setTagModalActive(false))
   }
 
   const onAddTag = () => {
@@ -35,7 +34,6 @@ export default function TagModal() {
     const tagsUpdated = [...tags, newTag].sort(utils.sortTags);
     setNewTags(tagsUpdated);
     setNewTagName("")
-    onSave()
   };
 
   const onClose = () => {
@@ -60,12 +58,12 @@ export default function TagModal() {
         "Tag will be deleted. It will be removed from all note instances."
       )
     ) {
-      if (idToDelete === activeTag._id) {
-        dispatch(setActiveTag(null))
-      }
+      dispatch(setActiveTag(null))
       dispatch(displayNoteList)
-      setNewTags(tags.filter((tag) => tag._id !== idToDelete));
-      onSave()
+      const updatedTags = newTags.filter((tag) => tag._id !== idToDelete)
+      setNewTags(updatedTags);
+      dispatch(updateTags(updatedTags))
+      dispatch(setTagModalActive(false))
     }
   };
 
@@ -114,7 +112,7 @@ export default function TagModal() {
             <button
               className="icon-btn"
               type="button"
-              onClick={(e) => onDelete(tag._id)}
+              onClick={() => onDelete(tag._id)}
             >
               <span className="material-symbols-outlined">delete</span>
             </button>
