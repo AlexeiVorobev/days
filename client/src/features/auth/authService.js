@@ -1,7 +1,8 @@
 import axios from "axios";
 import { json } from "react-router-dom";
 
-const API_URL = 'http://localhost:5000/api/users/'
+// const API_URL = 'http://localhost:5000/api/users/'
+const API_URL = 'http://days-1vxd.onrender.com/api/users/'
 
 // Register user
 const register = async (userData) => {
