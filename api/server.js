@@ -20,14 +20,14 @@ app.use(cors({
 app.use('/api/notes', require('./routes/noteRoutes'))
 app.use('/api/users', require('./routes/userRoutes'))
 
-//Serve frontend
-if(process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/dist')))
+// //Serve frontend
+// if(process.env.NODE_ENV === 'production') {
+//   app.use(express.static(path.join(__dirname, '../client/dist')))
 
-  app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, "../", 'client', 'dist', 'index.html')))
-} else {
-  app.get('/', (req, res) => res.send('Please set to'))
-}
+//   app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, "../", 'client', 'dist', 'index.html')))
+// } else {
+//   app.get('/', (req, res) => res.send('Please set to'))
+// }
 
 app.use(errorHandler);
 
