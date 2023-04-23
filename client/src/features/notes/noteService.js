@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // const API_URL = 'http://localhost:5000/api/notes/'
-const API_URL = 'http://days-production.up.railway.app/api/notes/'
+const API_URL = 'https://days-production.up.railway.app/api/notes/'
 
 // Create new note
 const createNote = async (noteData, token) => {
