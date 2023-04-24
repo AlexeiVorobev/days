@@ -52,20 +52,6 @@ function Dashboard() {
     if (!user) {
       navigate("/login");
     }
-
-    // if (!unsavedChanges) {
-    //   toast.success("Saved!", {
-    //     position: "top-right",
-    //     autoClose: 1000,
-    //     hideProgressBar: true,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //     progress: undefined,
-    //     theme: "light",
-    //   });
-    // }
-
     dispatch(getNotes());
     dispatch(getTags());
 
@@ -73,8 +59,6 @@ function Dashboard() {
       dispatch(reset());
     };
   }, [user, navigate, isError, message, dispatch]);
-
-  const [tagModalActive, setTagModalActive] = useState(false);
 
   return (
     <div>

@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { register, reset } from "../features/auth/authSlice";
-import Spinner from "../components/Spinner";
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -16,7 +15,7 @@ export default function Register() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
+  const { user, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
 
@@ -49,10 +48,6 @@ export default function Register() {
     };
     dispatch(register(userData));
   };
-
-  if (isLoading) {
-    return <Spinner />
-  }
 
   return (
     <div className="form-container">
