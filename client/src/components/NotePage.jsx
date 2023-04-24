@@ -119,7 +119,7 @@ const NotePage = () => {
             })}
           </div>
           <div className="right">
-          <button className="btn-special" onClick={onSave}>
+          <button className="btn-regular" onClick={onSave}>
                 Save
               </button>
           </div>
