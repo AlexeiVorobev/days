@@ -4,18 +4,18 @@ import Login from './routes/Login'
 import Register from './routes/Register'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
 
 export default function App() {
   return (
     <div>
-        <BrowserRouter>
+        <HashRouter>
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Routes>
-        </BrowserRouter>
+        </HashRouter>
         <ToastContainer />
     </div>
   )
