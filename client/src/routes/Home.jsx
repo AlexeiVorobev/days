@@ -8,7 +8,7 @@ import { formatISO } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getNotes, reset } from "../features/notes/noteSlice";
-import Spinner from '../components/Spinner'
+import Spinner from "../components/Spinner";
 import NotePage from "../components/NotePage";
 import NoteList from "../components/NoteList";
 import { getTags } from "../features/tags/tagSlice";
@@ -37,43 +37,42 @@ const DEFAULT_NOTES = [
 ];
 
 function Dashboard() {
+  const { isLoading, isError, message } = useSelector((state) => state.notes);
 
-  const { isLoading, isError, message, unsavedChanges} = useSelector((state) => state.notes)
-
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const {user} = useSelector((state) => state.auth)
-  const mainView = useSelector(state => state.ui.mainView)
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  const mainView = useSelector((state) => state.ui.mainView);
 
   useEffect(() => {
     if (isError) {
-      console.log(message)
+      console.log(message);
     }
-    
+
     if (!user) {
-      navigate('/login')
+      navigate("/login");
     }
 
-    if(!unsavedChanges) {
-      toast.success('Saved!', {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        });    }
+    // if (!unsavedChanges) {
+    //   toast.success("Saved!", {
+    //     position: "top-right",
+    //     autoClose: 1000,
+    //     hideProgressBar: true,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //     theme: "light",
+    //   });
+    // }
 
-    dispatch(getNotes())
-    dispatch(getTags())
+    dispatch(getNotes());
+    dispatch(getTags());
 
     return () => {
-      dispatch(reset())
-    }
-    
-  }, [user, navigate, isError, message, dispatch, unsavedChanges])
+      dispatch(reset());
+    };
+  }, [user, navigate, isError, message, dispatch]);
 
   const [tagModalActive, setTagModalActive] = useState(false);
 

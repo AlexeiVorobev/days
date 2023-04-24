@@ -3,7 +3,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import format from "date-fns/format";
 import { useDispatch, useSelector } from "react-redux";
-import { setActiveNote, updateNote, setUnsavedChanges } from "../features/notes/noteSlice";
+import { setActiveNote, updateNote } from "../features/notes/noteSlice";
 import {
   updateNoteDropdownState,
   displayNoteList,
@@ -24,7 +24,6 @@ const NotePage = () => {
   const dispatch = useDispatch();
   const note = useSelector((state) => state.notes.activeNote);
   const dropdownActive = useSelector((state) => state.ui.noteDropdownState);
-  const unsavedChanges = useSelector((state) => state.notes.unsavedChanges);
 
   const handleClickBack = function () {
     onSave();
@@ -95,7 +94,6 @@ const NotePage = () => {
           theme="snow"
           value={note.text}
           onChange={(value) => {
-            dispatch(setUnsavedChanges(true));
             dispatch(
               setActiveNote({
                 ...note,
@@ -121,13 +119,9 @@ const NotePage = () => {
             })}
           </div>
           <div className="right">
-            {unsavedChanges ? (
-              <button className="btn-special" onClick={onSave}>
+          <button className="btn-special" onClick={onSave}>
                 Save
               </button>
-            ) : (
-              <div className="btn-regular">Saved</div>
-            )}
           </div>
         </div>
       </div>
