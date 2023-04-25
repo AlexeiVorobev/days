@@ -3,6 +3,8 @@ Days is a full-stack journaling application built with React, Redux Toolkit, Exp
 
 [Live Preview](https://alexthetaffer.github.io/days)
 
+To enter test account use test@test.com for email and 12345 for password.
+
 ## Features
 - Create and edit notes
 - Rich text formatting
