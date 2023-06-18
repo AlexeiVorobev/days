@@ -4,9 +4,11 @@ import Login from './routes/Login'
 import Register from './routes/Register'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
+import { Routes, Route, HashRouter } from "react-router-dom";
+import {useSelector} from 'react-redux'
 
 export default function App() {
+  // const user = useSelector(state => state.user.currentUser || null)
   return (
     <div>
         <HashRouter>

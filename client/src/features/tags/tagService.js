@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = 'https://days-production.up.railway.app/api/users/tags/'
+const API_URL = 'https://days-api-5cwl.onrender.com/api/users/tags/'
 
 // Get user tags
 const getTags = async (token) => {
