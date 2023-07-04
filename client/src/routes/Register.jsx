@@ -60,9 +60,8 @@ export default function Register() {
             <h1>Days</h1>
             <p>Sign-up now and start writing</p>
           </section>
-          <form onSubmit={onSubmit}>
+          <form className="login-form" onSubmit={onSubmit}>
             <input
-              style={{ width: "100%" }}
               type="email"
               name="email"
               id="email"
@@ -71,7 +70,6 @@ export default function Register() {
               onChange={onChange}
             />
             <input
-              style={{ width: "100%" }}
               type="password"
               name="password"
               id="password"

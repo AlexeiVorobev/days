@@ -24,6 +24,14 @@ export default function Login() {
     (state) => state.auth
   );
 
+  const enterTestAccount = () => {
+    const userData = {
+      email: "test@test.com",
+      password: "12345",
+    };
+    dispatch(login(userData));
+  };
+
   useEffect(() => {
     if (isError) {
       toast.error(message);
@@ -61,10 +69,11 @@ export default function Login() {
         <div className="form-container">
           <section className="heading">
             <h1>Days</h1>
-            <p>Write some stuff</p>
+            <p>Write something new</p>
           </section>
-          <form onSubmit={onSubmit}>
+          <form className="login-form" onSubmit={onSubmit}>
             <input
+
               type="email"
               name="email"
               id="email"
@@ -81,6 +90,20 @@ export default function Login() {
             />
             <button type="submit" className="btn-special">
               Login
+            </button>
+            <button
+              onClick={enterTestAccount}
+              type="button"
+              style={{
+                marginTop: "20px",
+                color: "green",
+                fontWeight: "bold",
+                fontSize: "16px",
+                padding: "0",
+                width: "fit-content",
+              }}
+            >
+              <span className="flashing-text">Enter Test-Account</span>
             </button>
           </form>
           <section className="subscript">
