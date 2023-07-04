@@ -62,6 +62,7 @@ export default function Register() {
           </section>
           <form onSubmit={onSubmit}>
             <input
+              style={{ width: "100%" }}
               type="email"
               name="email"
               id="email"
@@ -70,6 +71,7 @@ export default function Register() {
               onChange={onChange}
             />
             <input
+              style={{ width: "100%" }}
               type="password"
               name="password"
               id="password"
