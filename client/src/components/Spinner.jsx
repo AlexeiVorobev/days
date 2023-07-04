@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
 
 export default function Spinner() {
   return (
-    <div className='loadingSpinnerContainer'>
-        <div className="loadingSpinner"></div>
+    <div className="loadingSpinnerContainer">
+      <div class="loading-text">Loading...</div>
     </div>
-  )
+  );
 }
