@@ -1,7 +1,7 @@
 # Days Journaling App
 Days is a full-stack journaling application built with React, Redux Toolkit, Express, and MongoDB. It features rich text formatting, tags and user authentication.
 
-[Live Preview](https://alexeidevelops.github.io/days)
+[Live Preview](https://alexthetaffer.github.io/days)
 
 ## Features
 - Create and edit notes
